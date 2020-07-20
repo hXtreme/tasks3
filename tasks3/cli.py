@@ -1,15 +1,110 @@
 """Console script for tasks3."""
+import tasks3
 import sys
 import click
 
 
-@click.command()
+@click.group()
+@click.version_option()
 def main(args=None):
-    """Console script for tasks3."""
-    click.echo("Replace this message by putting your code into "
-               "tasks3.cli.main")
-    click.echo("See click documentation at https://click.palletsprojects.com/")
+    """tasks3 is a commandline tool to create and manage tasks and todo lists."""
     return 0
+
+
+@main.group()
+def task():
+    """Manage a task."""
+    pass
+
+
+@task.command()
+@click.option(
+    "-f",
+    "--format",
+    type=click.Choice(["YAML"]),
+    default="YAML",
+    help="Output format.",
+    show_default=True,
+)
+@click.argument("id", type=str)
+def show(format, id):
+    """Print the Task in the specified FORMAT.
+
+    ID is the id of the Task to be printed.
+    """
+    pass
+
+
+@task.command()
+@click.option(
+    "-y/-n",
+    "--yes/--no",
+    default=False,
+    help="Overwrite task data without confirmation?",
+)
+@click.argument("id", type=str)
+def edit(yes, id):
+    """Edit a Task
+
+    ID is the id of the Task to be edited.
+    """
+    pass
+
+
+@task.command()
+@click.option(
+    "-y/-n", "--yes/--no", default=False, help="Delete task without confirmation?"
+)
+@click.argument("id", type=str)
+def remove(yes, id):
+    """Remove a Task
+
+    ID is the id of the Task to be removed.
+    """
+    pass
+
+
+@task.command()
+@click.option(
+    "-T", "--title", default="Give a Title to this Task.", help="Title of the Task."
+)
+@click.option(
+    "-u",
+    "--urgency",
+    type=click.IntRange(min=0, max=4, clamp=True),
+    default=2,
+    is_flag=True,
+    flag_value=4,
+    help="Level of urgency of the Task. Higher the value (max of 4) greater the urgency. Defaults to 2 when absent and 4 when present.",
+)
+@click.option(
+    "-i",
+    "--importance",
+    type=click.IntRange(min=0, max=4, clamp=True),
+    default=2,
+    is_flag=True,
+    flag_value=4,
+    help="Level of importance of the Task. Higher the value (max of 4) greater the importance. Defaults to 2 when absent and 4 when present.",
+)
+@click.option("-t", "--tags", multiple=True, default=[], help="Tags for the Task.")
+@click.option(
+    "-a",
+    "--anchor_to_folder",
+    type=click.Path(exists=True, readable=False, resolve_path=True),
+    help="Anchor the Task to a specified directory or file.",
+)
+@click.option(
+    "-d", "--description", default="", help="A short description of the Task."
+)
+@click.option(
+    "-y/-n", "--yes/--no", default=False, help="Create task without confirmation?"
+)
+def add(
+    title: str, urgency: int, importance: int, tags, anchor_to_folder, description, yes
+):
+    """Add a new task.
+    """
+    pass
 
 
 if __name__ == "__main__":
