@@ -26,7 +26,7 @@ def task():
     show_default=True,
 )
 @click.argument("id", type=str)
-def show(format, id):
+def show(format: str, id: str):
     """Print the Task in the specified FORMAT.
 
     ID is the id of the Task to be printed.
@@ -42,7 +42,7 @@ def show(format, id):
     help="Overwrite task data without confirmation?",
 )
 @click.argument("id", type=str)
-def edit(yes, id):
+def edit(yes: bool, id: str):
     """Edit a Task
 
     ID is the id of the Task to be edited.
@@ -55,7 +55,7 @@ def edit(yes, id):
     "-y/-n", "--yes/--no", default=False, help="Delete task without confirmation?"
 )
 @click.argument("id", type=str)
-def remove(yes, id):
+def remove(yes: bool, id: str):
     """Remove a Task
 
     ID is the id of the Task to be removed.
@@ -103,7 +103,7 @@ def remove(yes, id):
     "-y/-n", "--yes/--no", default=False, help="Create task without confirmation?"
 )
 def add(
-    title: str, urgency: int, importance: int, tags, anchor_to_folder, description, yes
+        title: str, urgency: int, importance: int, tags: tuple, anchor_to_folder: str, description: str, yes: bool
 ):
     """Add a new task.
     """
