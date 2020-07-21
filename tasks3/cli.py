@@ -1,5 +1,4 @@
 """Console script for tasks3."""
-import tasks3
 import sys
 import click
 
@@ -75,7 +74,9 @@ def remove(yes, id):
     default=2,
     is_flag=True,
     flag_value=4,
-    help="Level of urgency of the Task. Higher the value (max of 4) greater the urgency. Defaults to 2 when absent and 4 when present.",
+    help="Level of urgency of the Task. "
+    "Higher the value (max of 4) greater the urgency. "
+    "Defaults to 2 when absent and 4 when present.",
 )
 @click.option(
     "-i",
@@ -84,7 +85,9 @@ def remove(yes, id):
     default=2,
     is_flag=True,
     flag_value=4,
-    help="Level of importance of the Task. Higher the value (max of 4) greater the importance. Defaults to 2 when absent and 4 when present.",
+    help="Level of importance of the Task. "
+    "Higher the value (max of 4) greater the importance. "
+    "Defaults to 2 when absent and 4 when present.",
 )
 @click.option("-t", "--tags", multiple=True, default=[], help="Tags for the Task.")
 @click.option(
