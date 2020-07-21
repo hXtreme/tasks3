@@ -94,7 +94,7 @@ def remove(yes: bool, id: str):
 @click.option(
     "-a",
     "--anchor_to_folder",
-    type=click.Path(exists=True, readable=False, resolve_path=True),
+    type=click.Path(exists=True, readable=False, file_okay=False, resolve_path=True),
     help="Anchor the Task to a specified directory or file.",
 )
 @click.option(
@@ -104,7 +104,13 @@ def remove(yes: bool, id: str):
     "-y/-n", "--yes/--no", default=False, help="Create task without confirmation?"
 )
 def add(
-        title: str, urgency: int, importance: int, tags: tuple, anchor_to_folder: str, description: str, yes: bool
+    title: str,
+    urgency: int,
+    importance: int,
+    tags: tuple,
+    anchor_to_folder: str,
+    description: str,
+    yes: bool,
 ):
     """Add a new task.
     """
