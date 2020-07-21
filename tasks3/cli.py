@@ -1,5 +1,6 @@
 """Console script for tasks3."""
 import sys
+import os
 import click
 
 
@@ -107,6 +108,48 @@ def add(
 ):
     """Add a new task.
     """
+    pass
+
+
+@main.group()
+def db():
+    """Manage tasks3's database"""
+    pass
+
+
+@db.command()
+@click.argument(
+    "db",
+    type=click.Path(dir_okay=False, writable=True),
+    default=os.path.join(click.get_app_dir(__name__), "tasks.db"),
+)
+def init(db: str):
+    """Initialize and setup the database at db.
+
+    If db is not provide a database at system's default app directory is used.
+    """
+    pass
+
+
+@db.command()
+@click.confirmation_option(prompt="Are you sure you want to purge all tasks?")
+@click.argument(
+    "db",
+    type=click.Path(dir_okay=False, writable=True),
+    default=os.path.join(click.get_app_dir(__name__), "tasks.db"),
+)
+def purge(db: str):
+    pass
+
+
+@db.command()
+@click.confirmation_option(prompt="Are you sure you want to drop the database?")
+@click.argument(
+    "db",
+    type=click.Path(dir_okay=False, writable=True),
+    default=os.path.join(click.get_app_dir(__name__), "tasks.db"),
+)
+def drop(db: str):
     pass
 
 
