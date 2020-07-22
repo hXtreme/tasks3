@@ -7,13 +7,13 @@ import click
 @click.group()
 @click.version_option()
 def main(args=None):
-    """tasks3 is a commandline tool to create and manage tasks and todo lists."""
+    """tasks3 is a commandline tool to create and manage tasks and todo lists"""
     return 0
 
 
 @main.group()
 def task():
-    """Manage a task."""
+    """Manage a task"""
     pass
 
 
@@ -28,7 +28,7 @@ def task():
 )
 @click.argument("id", type=str)
 def show(format: str, id: str):
-    """Print the Task in the specified FORMAT.
+    """Show the task in the specified FORMAT
 
     ID is the id of the Task to be printed.
     """
@@ -109,8 +109,7 @@ def add(
     description: str,
     yes: bool,
 ):
-    """Add a new task.
-    """
+    """Add a new task"""
     pass
 
 
@@ -126,10 +125,10 @@ def db():
     type=click.Path(dir_okay=False, writable=True),
     default=os.path.join(click.get_app_dir(__name__), "tasks.db"),
     show_default=True,
-    help="Location of database",
+    help="Location of database.",
 )
 def init(db: str):
-    """Initialize and setup the database at db."""
+    """Initialize and setup the database"""
     pass
 
 
@@ -139,10 +138,11 @@ def init(db: str):
     type=click.Path(dir_okay=False, writable=True),
     default=os.path.join(click.get_app_dir(__name__), "tasks.db"),
     show_default=True,
-    help="Location of database",
+    help="Location of database.",
 )
 @click.confirmation_option(prompt="Are you sure you want to purge all tasks?")
 def purge(db: str):
+    """Purge all tasks from the database"""
     pass
 
 
@@ -152,10 +152,11 @@ def purge(db: str):
     type=click.Path(dir_okay=False, writable=True),
     default=os.path.join(click.get_app_dir(__name__), "tasks.db"),
     show_default=True,
-    help="Location of database",
+    help="Location of database.",
 )
 @click.confirmation_option(prompt="Are you sure you want to drop the database?")
 def drop(db: str):
+    """Drop the databse"""
     pass
 
 
@@ -165,7 +166,7 @@ def drop(db: str):
     type=click.Path(dir_okay=False, writable=True),
     default=os.path.join(click.get_app_dir(__name__), "tasks.db"),
     show_default=True,
-    help="Location of database",
+    help="Location of database.",
 )
 @click.confirmation_option(prompt="Are you sure you want to move the database?")
 @click.argument(
