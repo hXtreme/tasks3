@@ -37,10 +37,7 @@ def show(format: str, id: str):
 
 @task.command()
 @click.option(
-    "-y/-n",
-    "--yes/--no",
-    default=False,
-    help="Overwrite task data without confirmation?",
+    "--yes", default=False, help="Overwrite task data without confirmation?",
 )
 @click.argument("id", type=str)
 def edit(yes: bool, id: str):
@@ -53,7 +50,7 @@ def edit(yes: bool, id: str):
 
 @task.command()
 @click.option(
-    "-y/-n", "--yes/--no", default=False, help="Delete task without confirmation?"
+    "--yes", default=False, help="Delete task without confirmation?",
 )
 @click.argument("id", type=str)
 def remove(yes: bool, id: str):
@@ -101,7 +98,7 @@ def remove(yes: bool, id: str):
     "-d", "--description", default="", help="A short description of the Task."
 )
 @click.option(
-    "-y/-n", "--yes/--no", default=False, help="Create task without confirmation?"
+    "--yes", default=False, help="Create task without confirmation?",
 )
 def add(
     title: str,
