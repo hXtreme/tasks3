@@ -159,5 +159,27 @@ def drop(db: str):
     pass
 
 
+@db.command()
+@click.confirmation_option(prompt="Are you sure you want to move the database?")
+@click.option(
+    "--db",
+    type=click.Path(dir_okay=False, writable=True),
+    default=os.path.join(click.get_app_dir(__name__), "tasks.db"),
+    show_default=True,
+    help="Location of database",
+)
+@click.argument(
+    "dest_db",
+    type=click.Path(dir_okay=False, writable=True),
+    default=os.path.join(click.get_app_dir(__name__), "tasks.db"),
+)
+def move(db: str, dest_db: str):
+    """Move tasks database to DEST_DB
+
+    DEST_DB will be overwriten if it already exists.
+    """
+    pass
+
+
 if __name__ == "__main__":
     sys.exit(main())  # pragma: no cover
