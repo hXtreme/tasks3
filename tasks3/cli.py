@@ -6,13 +6,27 @@ import click
 
 @click.group()
 @click.version_option()
-def main(args=None):
+@click.option(
+    "--db",
+    type=click.Path(dir_okay=False, writable=True),
+    default=os.path.join(click.get_app_dir(__name__), "tasks.db"),
+    show_default=True,
+    help="Location of tasks database.",
+)
+@click.pass_context
+def main(ctx: click.core.Context, db: str):
     """tasks3 is a commandline tool to create and manage tasks and todo lists"""
+
+    ctx.ensure_object(dict)
+
+    ctx.obj["DB"] = db
+    print(type(ctx))
     return 0
 
 
 @main.group()
-def task():
+@click.pass_context
+def task(ctx: click.core.Context):
     """Manage a task"""
     pass
 
@@ -27,7 +41,8 @@ def task():
     show_default=True,
 )
 @click.argument("id", type=str)
-def show(format: str, id: str):
+@click.pass_context
+def show(ctx: click.core.Context, format: str, id: str):
     """Show the task in the specified FORMAT
 
     ID is the id of the Task to be printed.
@@ -40,7 +55,8 @@ def show(format: str, id: str):
     "--yes", default=False, help="Overwrite task data without confirmation?",
 )
 @click.argument("id", type=str)
-def edit(yes: bool, id: str):
+@click.pass_context
+def edit(ctx: click.core.Context, yes: bool, id: str):
     """Edit a Task
 
     ID is the id of the Task to be edited.
@@ -53,7 +69,8 @@ def edit(yes: bool, id: str):
     "--yes", default=False, help="Delete task without confirmation?",
 )
 @click.argument("id", type=str)
-def remove(yes: bool, id: str):
+@click.pass_context
+def remove(ctx: click.core.Context, yes: bool, id: str):
     """Remove a Task
 
     ID is the id of the Task to be removed.
@@ -100,7 +117,9 @@ def remove(yes: bool, id: str):
 @click.option(
     "--yes", default=False, help="Create task without confirmation?",
 )
+@click.pass_context
 def add(
+    ctx: click.core.Context,
     title: str,
     urgency: int,
     importance: int,
@@ -114,67 +133,44 @@ def add(
 
 
 @main.group()
-def db():
+@click.pass_context
+def db(ctx: click.core.Context):
     """Manage tasks3's database"""
     pass
 
 
 @db.command()
-@click.option(
-    "--db",
-    type=click.Path(dir_okay=False, writable=True),
-    default=os.path.join(click.get_app_dir(__name__), "tasks.db"),
-    show_default=True,
-    help="Location of database.",
-)
-def init(db: str):
+@click.pass_context
+def init(ctx: click.core.Context):
     """Initialize and setup the database"""
     pass
 
 
 @db.command()
-@click.option(
-    "--db",
-    type=click.Path(dir_okay=False, writable=True),
-    default=os.path.join(click.get_app_dir(__name__), "tasks.db"),
-    show_default=True,
-    help="Location of database.",
-)
 @click.confirmation_option(prompt="Are you sure you want to purge all tasks?")
-def purge(db: str):
+@click.pass_context
+def purge(ctx: click.core.Context):
     """Purge all tasks from the database"""
     pass
 
 
 @db.command()
-@click.option(
-    "--db",
-    type=click.Path(dir_okay=False, writable=True),
-    default=os.path.join(click.get_app_dir(__name__), "tasks.db"),
-    show_default=True,
-    help="Location of database.",
-)
 @click.confirmation_option(prompt="Are you sure you want to drop the database?")
-def drop(db: str):
+@click.pass_context
+def drop(ctx: click.core.Context):
     """Drop the databse"""
     pass
 
 
 @db.command()
-@click.option(
-    "--db",
-    type=click.Path(dir_okay=False, writable=True),
-    default=os.path.join(click.get_app_dir(__name__), "tasks.db"),
-    show_default=True,
-    help="Location of database.",
-)
 @click.confirmation_option(prompt="Are you sure you want to move the database?")
 @click.argument(
     "dest_db",
     type=click.Path(dir_okay=False, writable=True),
     default=os.path.join(click.get_app_dir(__name__), "tasks.db"),
 )
-def move(db: str, dest_db: str):
+@click.pass_context
+def move(ctx: click.core.Context, dest_db: str):
     """Move tasks database to DEST_DB
 
     DEST_DB will be overwriten if it already exists.
