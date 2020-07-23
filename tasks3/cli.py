@@ -5,7 +5,6 @@ import click
 
 
 @click.group()
-@click.version_option()
 @click.option(
     "--db",
     type=click.Path(dir_okay=False, writable=True),
@@ -13,6 +12,7 @@ import click
     show_default=True,
     help="Location of tasks database.",
 )
+@click.version_option()
 @click.pass_context
 def main(ctx: click.core.Context, db: str):
     """tasks3 is a commandline tool to create and manage tasks and todo lists"""
