@@ -20,7 +20,6 @@ def main(ctx: click.core.Context, db: str):
     ctx.ensure_object(dict)
 
     ctx.obj["DB"] = db
-    print(type(ctx))
     return 0
 
 
