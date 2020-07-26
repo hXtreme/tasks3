@@ -3,7 +3,11 @@ import sys
 import os
 import click
 
+from pkg_resources import iter_entry_points
+from click_plugins import with_plugins
 
+
+@with_plugins(iter_entry_points("click_command_tree"))
 @click.group()
 @click.option(
     "--db",
