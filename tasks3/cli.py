@@ -32,6 +32,49 @@ def task(ctx: click.core.Context):
 
 @task.command()
 @click.option(
+    "--id",
+    type=str,
+    help="Filter by id. "
+    "You can pass /partial-id/ to search for all tasks whose id contains partial-id.",
+)
+@click.option("-T", "--title", type=str, help="Search by Title")
+@click.option(
+    "-u",
+    "--urgency",
+    type=click.IntRange(min=0, max=4, clamp=True),
+    help="Filter by urgency.",
+)
+@click.option(
+    "-i",
+    "--importance",
+    type=click.IntRange(min=0, max=4, clamp=True),
+    help="Filter by importance.",
+)
+@click.option("-t", "--tags", multiple=True, help="Filter by tags.")
+@click.option(
+    "-a",
+    "--anchor_folder",
+    type=click.Path(exists=True, readable=False, file_okay=False, resolve_path=True),
+    help="Filter by anchored folder.",
+)
+@click.option("-d", "--description", type=str, help="Search in description.")
+@click.pass_context
+def search(
+    ctx: click.core.Context,
+    id: str,
+    title: str,
+    urgency: int,
+    importance: int,
+    tags: list,
+    anchor_folder: str,
+    description: str,
+):
+    """Search for tasks"""
+    pass
+
+
+@task.command()
+@click.option(
     "-f",
     "--format",
     type=click.Choice(["YAML"]),
@@ -106,7 +149,7 @@ def remove(ctx: click.core.Context, yes: bool, id: str):
 @click.option("-t", "--tags", multiple=True, default=[], help="Tags for the Task.")
 @click.option(
     "-a",
-    "--anchor_to_folder",
+    "--anchor_folder",
     type=click.Path(exists=True, readable=False, file_okay=False, resolve_path=True),
     help="Anchor the Task to a specified directory or file.",
 )
@@ -123,7 +166,7 @@ def add(
     urgency: int,
     importance: int,
     tags: tuple,
-    anchor_to_folder: str,
+    anchor_folder: str,
     description: str,
     yes: bool,
 ):
