@@ -10,11 +10,9 @@ with open("README.rst") as readme_file:
 with open("HISTORY.rst") as history_file:
     history = history_file.read()
 
-requirements = [
-    "Click>=7.0",
-    "click-plugins==1.1.1",
-    "click-command-tree==1.1.0",
-]
+with open("requirements.txt") as requirements_file:
+    requirements = requirements_file.read().splitlines()
+
 
 setup_requirements = [
     "pytest-runner",
