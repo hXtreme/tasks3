@@ -3,7 +3,7 @@
 import tasks3.db.model as model
 
 from collections import OrderedDict as odict
-from sqlalchemy import Column, Unicode, Integer, ARRAY, UnicodeText, CheckConstraint
+from sqlalchemy import Column, Unicode, Integer, UnicodeText, CheckConstraint, JSON
 
 
 class Task(model.Base):
@@ -16,13 +16,15 @@ class Task(model.Base):
     title = Column(Unicode, nullable=False)
     urgency = Column(Integer, nullable=False)
     importance = Column(Integer, nullable=False)
-    tags = Column(ARRAY(Unicode), nullable=False)
+    tags = Column(JSON, nullable=False)
     folder = Column(Unicode)
     description = Column(UnicodeText)
 
     __table_args__ = (
-        CheckConstraint(0 <= urgency <= 4, "Urgency interval check"),
-        CheckConstraint(0 <= importance <= 4, "Importance interval check"),
+        CheckConstraint(0 <= urgency, "Urgency interval check"),
+        CheckConstraint(urgency <= 4, "Urgency interval check"),
+        CheckConstraint(0 <= importance, "Importance interval check"),
+        CheckConstraint(importance <= 4, "Importance interval check"),
     )
 
     def _to_dict(self) -> odict:
