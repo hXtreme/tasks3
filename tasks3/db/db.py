@@ -1,35 +1,32 @@
 """Database management functions"""
 
-import tasks3.db as db
-from sqlalchemy import create_engine
+from sqlalchemy.engine import Engine
 from sqlalchemy.orm import Query
 
+import tasks3.db as db
 from tasks3.db.extension import session_scope
 
 
-def init(db_path: str):
-    """Initialize a database to store Tasks at db_path
+def init(db_engine: Engine):
+    """Initialize a database used by db_engine to store Tasks
 
-    :param db_path: uri to the database
+    :param db_engine: engine for the database
     """
-    engine = create_engine(db_path)
-    db.Base.metadata.create_all(bind=engine)
+    db.Base.metadata.create_all(bind=db_engine)
 
 
-def purge(db_path: str):
-    """Remove all tasks from the database at db_path
+def purge(db_engine: str):
+    """Remove all tasks from the database
 
-    :param db_path: uri to the database
+    :param db_engine: engine for the database
     """
-    engine = create_engine(db_path)
-    with session_scope(bind=engine) as session:
+    with session_scope(bind=db_engine) as session:
         Query(db.Task, session).delete()
 
 
-def drop(db_path: str):
-    """Drop the database at db_path
+def drop(db_engine: str):
+    """Drop the database used by db_engine
 
-    :param db_path: uri to the database
+    :param db_engine: engine for the database
     """
-    engine = create_engine(db_path)
-    db.Base.metadata.drop_all(bind=engine)
+    db.Base.metadata.drop_all(bind=db_engine)

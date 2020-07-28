@@ -1,3 +1,3 @@
 """Main module."""
 
-import db
+import tasks3.db
