@@ -7,17 +7,17 @@ import pytest
 from tasks3.db import Task
 
 
-@pytest.fixture(params=["Title", "Sample Title0"])
+@pytest.fixture(params=["Title"])
 def title(request):
     return request.param
 
 
-@pytest.fixture(params=[x for x in range(5)])
+@pytest.fixture(params=[0, 4], ids=["Not Urgent", "Very Urgent"])
 def urgency(request):
     return request.param
 
 
-@pytest.fixture(params=[x for x in range(5)])
+@pytest.fixture(params=[0, 4], ids=["Not Important", "Very Important"])
 def importance(request):
     return request.param
 
