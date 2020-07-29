@@ -3,7 +3,7 @@
 from sqlalchemy.engine import Engine
 from sqlalchemy.orm import Query
 
-import tasks3.db as db
+from tasks3 import db
 from tasks3.db.extension import session_scope
 
 

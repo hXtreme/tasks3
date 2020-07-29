@@ -1,6 +1,6 @@
 """Task database model"""
 
-import tasks3.db.model as model
+from tasks3.db import model
 
 from collections import OrderedDict as odict
 from sqlalchemy import Column, Unicode, Integer, UnicodeText, CheckConstraint, JSON
