@@ -8,21 +8,21 @@ from tasks3.db import Task
 
 
 @pytest.fixture(params=["Title"])
-def title(request):
+def title(request) -> str:
     return request.param
 
 
 @pytest.fixture(params=[0, 4], ids=["Not Urgent", "Very Urgent"])
-def urgency(request):
+def urgency(request) -> int:
     return request.param
 
 
 @pytest.fixture(params=[0, 4], ids=["Not Important", "Very Important"])
-def importance(request):
+def importance(request) -> int:
     return request.param
 
 
-def test_task_create(title, urgency, importance):
+def test_task_create(title: str, urgency: int, importance: int):
     task = Task(title=title, urgency=urgency, importance=importance, tags=["pytest"],)
     assert task.title == title
     assert task.urgency == urgency

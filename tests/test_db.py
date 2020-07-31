@@ -28,7 +28,7 @@ def get_db(tmp_path: Path, backend: str) -> Tuple[Path, Engine]:
     return db_path, db_engine
 
 
-def test_db_init(tmp_path: Path, db_backend):
+def test_db_init(tmp_path: Path, db_backend: str):
     db_path, db_engine = get_db(tmp_path, db_backend)
     assert not db_path.exists()
     db.init(db_engine)
@@ -37,7 +37,7 @@ def test_db_init(tmp_path: Path, db_backend):
     assert "task" in db_engine.table_names()
 
 
-def test_db_add_task(tmp_path: Path, db_backend):
+def test_db_add_task(tmp_path: Path, db_backend: str):
     db_path, db_engine = get_db(tmp_path, db_backend)
     db.init(db_engine)
     assert "task" in db_engine.table_names()
@@ -50,7 +50,7 @@ def test_db_add_task(tmp_path: Path, db_backend):
     assert count == 1
 
 
-def test_db_purge(tmp_path: Path, db_backend):
+def test_db_purge(tmp_path: Path, db_backend: str):
     db_path, db_engine = get_db(tmp_path, db_backend)
     db.init(db_engine)
     assert "task" in db_engine.table_names()
@@ -67,7 +67,7 @@ def test_db_purge(tmp_path: Path, db_backend):
     assert count == 0
 
 
-def test_db_drop(tmp_path: Path, db_backend):
+def test_db_drop(tmp_path: Path, db_backend: str):
     db_path, db_engine = get_db(tmp_path, db_backend)
     db.init(db_engine)
     assert "task" in db_engine.table_names()

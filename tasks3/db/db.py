@@ -7,7 +7,7 @@ from tasks3 import db
 from tasks3.db.extension import session_scope
 
 
-def init(db_engine: Engine):
+def init(db_engine: Engine) -> None:
     """Initialize a database used by db_engine to store Tasks
 
     :param db_engine: engine for the database
@@ -15,7 +15,7 @@ def init(db_engine: Engine):
     db.Base.metadata.create_all(bind=db_engine)
 
 
-def purge(db_engine: str):
+def purge(db_engine: Engine) -> None:
     """Remove all tasks from the database
 
     :param db_engine: engine for the database
@@ -24,7 +24,7 @@ def purge(db_engine: str):
         Query(db.Task, session).delete()
 
 
-def drop(db_engine: str):
+def drop(db_engine: Engine) -> None:
     """Drop the database used by db_engine
 
     :param db_engine: engine for the database
