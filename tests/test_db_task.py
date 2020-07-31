@@ -6,6 +6,8 @@ import pytest
 
 from tasks3.db import Task
 
+from typing import Set
+
 
 @pytest.fixture(params=["Title"])
 def title(request) -> str:
@@ -22,9 +24,14 @@ def importance(request) -> int:
     return request.param
 
 
-def test_task_create(title: str, urgency: int, importance: int):
-    task = Task(title=title, urgency=urgency, importance=importance, tags=["pytest"],)
+@pytest.fixture(params=[{"pytest"}])
+def tags(request) -> Set[str]:
+    return request.param
+
+
+def test_task_create(title: str, urgency: int, importance: int, tags: Set[str]):
+    task = Task(title=title, urgency=urgency, importance=importance, tags=tags,)
     assert task.title == title
     assert task.urgency == urgency
     assert task.importance == importance
-    assert "pytest" in task.tags
+    assert task.tags == tags
