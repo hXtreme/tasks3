@@ -1,7 +1,8 @@
 """Console script for tasks3."""
 import sys
-import os
 import click
+
+from tasks3 import config
 
 from pkg_resources import iter_entry_points
 from click_plugins import with_plugins
@@ -12,7 +13,7 @@ from click_plugins import with_plugins
 @click.option(
     "--db",
     type=click.Path(dir_okay=False, writable=True),
-    default=os.path.join(click.get_app_dir(__name__), "tasks.db"),
+    default=f"{config.DB_BACKEND}:///{config.DB_PATH.absolute()}",
     show_default=True,
     help="Location of tasks database.",
 )
@@ -213,7 +214,7 @@ def drop(ctx: click.core.Context):
 @click.argument(
     "dest_db",
     type=click.Path(dir_okay=False, writable=True),
-    default=os.path.join(click.get_app_dir(__name__), "tasks.db"),
+    default=f"{config.DB_BACKEND}:///{config.DB_PATH.absolute()}",
 )
 @click.pass_context
 def move(ctx: click.core.Context, dest_db: str):
