@@ -10,7 +10,7 @@ from sqlalchemy.orm import Session
 
 @contextmanager
 def session_scope(bind: Engine) -> Generator[Session, Engine, None]:
-    """Provide a transactional scope around a series of operations.
+    """Provide a transactional scope around a series of database operations.
 
     src: https://docs.sqlalchemy.org/en/13/orm/session_basics.html
     """

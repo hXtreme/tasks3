@@ -8,7 +8,7 @@ from tasks3.db.extension import session_scope
 
 
 def init(db_engine: Engine) -> None:
-    """Initialize a database used by db_engine to store Tasks
+    """Initialize the database used by db_engine to store Tasks
 
     :param db_engine: engine for the database
     """
