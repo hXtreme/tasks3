@@ -2,6 +2,20 @@
 History
 =======
 
+0.0.11 (2020-08-04)
+-------------------
+
+* Add support for a yaml configuration file.
+* Add database to store Tasks, db models and api to interact with db.
+* Switch to using requirements.txt for managing dependency and add
+  back the support for py35.
+* Add a bunch of type annotations.
+* Update dependency:
+   * pip to 20.2
+   * pytest to 6.0.1
+   * tox to 3.18.1
+   * coverage to 5.2.1
+
 0.0.9 - 0.0.10 (2020-07-26)
 ---------------------------
 
