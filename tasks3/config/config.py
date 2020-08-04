@@ -31,7 +31,7 @@ def load_config(
         config_data = YAML().load(config_file_path)
     except (AttributeError, FileNotFoundError) as e:
         config_data = None
-        click.echo(f"Failed to load config file!\n{e}")
+        click.echo(f"Failed to load config file!\n{e}", err=True)
     finally:
         if config_data is None:
             config_data = dict()
