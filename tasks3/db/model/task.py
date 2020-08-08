@@ -2,6 +2,7 @@
 
 from tasks3.db import model
 
+from collections import OrderedDict as odict
 from sqlalchemy import Column, Unicode, Integer, UnicodeText, CheckConstraint, JSON
 
 
@@ -26,8 +27,8 @@ class Task(model.Base):
         CheckConstraint(importance <= 4, "Importance interval check"),
     )
 
-    def _to_dict(self) -> dict:
-        return dict(
+    def _to_dict(self) -> odict:
+        return odict(
             id=self.id,
             title=self.title,
             urgency=self.urgency,
