@@ -4,4 +4,4 @@ __author__ = """Harsh Parekh"""
 __email__ = "harsh_parekh@outlook.com"
 __version__ = "0.0.11"
 
-from tasks3.tasks3 import add, edit, remove
+from tasks3.tasks3 import add, edit, remove  # noqa: F401
