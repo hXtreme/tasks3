@@ -146,7 +146,13 @@ def test_task_remove(
     with db.session_scope(db_engine) as session:
         task: db.Task = session.query(db.Task).filter_by(id=id).one()
         assert task is not None
-    tasks3.remove(id, db_engine)
+    task = tasks3.remove(id, db_engine)
+    assert task.title == title
+    assert task.urgency == urgency
+    assert task.importance == importance
+    assert task.tags == tags
+    assert task.folder == anchor_path
+    assert task.description == description
     with db.session_scope(db_engine) as session:
         task: db.Task = session.query(db.Task).filter_by(id=id).first()
         assert task is None
