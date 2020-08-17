@@ -2,6 +2,13 @@
 History
 =======
 
+0.1.0 (2020-08-17)
+------------------
+
+* Implement tasks3.add
+* Implement tasks3.edit
+* Implement tasks3.remove
+
 0.0.11 (2020-08-04)
 -------------------
 
