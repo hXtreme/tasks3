@@ -6,8 +6,8 @@ tasks3
 .. image:: https://img.shields.io/pypi/v/tasks3.svg
         :target: https://pypi.python.org/pypi/tasks3
 
-.. image:: https://img.shields.io/travis/hXtreme/tasks3.svg
-        :target: https://travis-ci.com/hXtreme/tasks3
+.. image:: https://github.com/hXtreme/tasks3/actions/workflows/tox-test.yml/badge.svg
+        :target: https://github.com/hXtreme/tasks3/actions/workflows/tox-test.yml
 
 .. image:: https://readthedocs.org/projects/tasks3/badge/?version=latest
         :target: https://tasks3.readthedocs.io/en/latest/?badge=latest
