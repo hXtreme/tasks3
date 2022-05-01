@@ -1,12 +1,9 @@
 """Configuration manager for tasks3."""
 
-from .config import load_config
+from tasks3.config.config import Config, config  # noqa: F401
 
-(CONFIG_FILE_PATH, DATA_FOLDER_PATH, DB_BACKEND, DB_PATH,) = load_config()
 
 __all__ = {
-    "CONFIG_FILE_PATH",
-    "DATA_FOLDER_PATH",
-    "DB_BACKEND",
-    "DB_PATH",
+    "config",
+    "Config",
 }
