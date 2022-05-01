@@ -1,3 +1,5 @@
+"""Configuration for tasks3."""
+
 import click
 
 from dataclasses import dataclass, asdict
