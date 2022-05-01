@@ -1,8 +1,9 @@
 """Console script for tasks3."""
+from pathlib import Path
 import sys
 import click
 
-from tasks3 import config
+from tasks3.config import config
 
 from pkg_resources import iter_entry_points
 from click_plugins import with_plugins
@@ -12,19 +13,19 @@ from click_plugins import with_plugins
 @click.group()
 @click.option(
     "--db",
-    type=click.Path(dir_okay=False, writable=True),
-    default=f"{config.DB_BACKEND}:///{config.DB_PATH.absolute()}",
+    type=click.Path(dir_okay=False, writable=True, path_type=Path),
+    default=config.db_path,
     show_default=True,
     help="Location of tasks database.",
 )
 @click.version_option()
 @click.pass_context
-def main(ctx: click.core.Context, db: str):
+def main(ctx: click.core.Context, db: Path):
     """tasks3 is a commandline tool to create and manage tasks and todo lists"""
 
     ctx.ensure_object(dict)
-
-    ctx.obj["DB"] = db
+    config.db_path = db
+    ctx.obj["config"] = config
     return 0
 
 
@@ -99,7 +100,9 @@ def show(ctx: click.core.Context, format: str, id: str):
 
 @task.command()
 @click.option(
-    "--yes", default=False, help="Overwrite task data without confirmation?",
+    "--yes",
+    default=False,
+    help="Overwrite task data without confirmation?",
 )
 @click.argument("id", type=str)
 @click.pass_context
@@ -113,7 +116,9 @@ def edit(ctx: click.core.Context, yes: bool, id: str):
 
 @task.command()
 @click.option(
-    "--yes", default=False, help="Delete task without confirmation?",
+    "--yes",
+    default=False,
+    help="Delete task without confirmation?",
 )
 @click.argument("id", type=str)
 @click.pass_context
@@ -162,7 +167,9 @@ def remove(ctx: click.core.Context, yes: bool, id: str):
     "-d", "--description", default="", help="A short description of the Task."
 )
 @click.option(
-    "--yes", default=False, help="Create task without confirmation?",
+    "--yes",
+    default=False,
+    help="Create task without confirmation?",
 )
 @click.pass_context
 def add(
@@ -213,8 +220,8 @@ def drop(ctx: click.core.Context):
 @click.confirmation_option(prompt="Are you sure you want to move the database?")
 @click.argument(
     "dest_db",
-    type=click.Path(dir_okay=False, writable=True),
-    default=f"{config.DB_BACKEND}:///{config.DB_PATH.absolute()}",
+    type=click.Path(dir_okay=False, writable=True, path_type=Path),
+    default=config.db_path,
 )
 @click.pass_context
 def move(ctx: click.core.Context, dest_db: str):

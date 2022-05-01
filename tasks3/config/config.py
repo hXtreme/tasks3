@@ -1,55 +1,78 @@
 import click
 
-from typing import Tuple
-
+from dataclasses import dataclass, asdict
+from enum import Enum
 from pathlib import Path
+
 from ruamel.yaml import YAML
 
-__root_package__ = __package__.split(".")[0]
+__package_name__ = __package__.split(".")[0]
 
-DEFAULT_CONFIG_FILE_PATH: Path = Path(click.get_app_dir(__root_package__)).joinpath(
-    "config.yml"
-)
-DEFAULT_DATA_FOLDER_PATH: Path = Path(click.get_app_dir(__root_package__))
-
-SUPPORTED_DB_BACKEND = {
-    "mysql",
-    "postgresql",
-    "sqlite",
-}
+APP_DIR: str = click.get_app_dir(__package_name__)
+DEFAULT_CONFIG_FILE_PATH: Path = Path(APP_DIR) / "config.yml"
+DEFAULT_DATA_FOLDER_PATH: Path = Path(APP_DIR)
 
 
-def load_config(
-    config_file_path: Path = DEFAULT_CONFIG_FILE_PATH,
-) -> Tuple[Path, Path, str, Path]:
-    """Load configuration settings from a config file (yaml)
+class DBBackend(Enum):
+    """Supported database backends"""
 
-    :config_file_path: pathlib.Path object to the config file.
-    :returns: CONFIG_FILE_PATH, DATA_FOLDER_PATH, DB_BACKEND, DB_PATH
+    sqlite = "sqlite"
+    mysql = "mysql"
+    postgresql = "postgresql"
+
+
+@dataclass
+class Config:
+    db: str = str(DEFAULT_DATA_FOLDER_PATH / "tasks.db")
+    backend: str = DBBackend.sqlite.value
+
+    @property
+    def db_backend(self) -> DBBackend:
+        return DBBackend(self.backend)
+
+    @db_backend.setter
+    def db_backend(self, backend: str) -> None:
+        try:
+            DBBackend(backend)
+        except ValueError:
+            raise ValueError(f"Unsupported database backend: {backend}")
+        self.backend = backend
+
+    @property
+    def db_path(self) -> Path:
+        return Path(self.db)
+
+    @db_path.setter
+    def db_path(self, path: Path) -> None:
+        self.db = str(path.absolute())
+
+    @property
+    def db_uri(self) -> str:
+        return f"{self.db_backend.value}:///{self.db_path.absolute()}"
+
+    @classmethod
+    def from_yaml(cls, file_path: Path) -> "Config":
+        config = YAML().load(file_path)
+        return cls(**config)
+
+    def to_yaml(self, file_path: Path) -> None:
+        file_path.parent.mkdir(parents=True, exist_ok=True)
+        YAML().dump(asdict(self), file_path)
+
+
+def load_config(config_file_path: Path = DEFAULT_CONFIG_FILE_PATH) -> Config:
     """
-    try:
-        config_data = YAML().load(config_file_path)
-    except (AttributeError, FileNotFoundError) as e:
-        config_data = None
-        click.echo(f"Failed to load config file!\n{e}", err=True)
-    finally:
-        if config_data is None:
-            config_data = dict()
-    data_folder_path = config_data.get("data folder", DEFAULT_DATA_FOLDER_PATH)
+    Load configuration settings from a config file (yaml)
 
-    """Get configuration of the database.
-
-    + DB backend
-    + DB path
+    :param config_file_path: pathlib.Path object to the config file.
+    :returns: Config object
     """
-    db_config: dict = config_data.get("db", dict())
-    # Note: If we drop support for python<=3.8
-    # switch to using walrus operator here.
-    db_backend: str = db_config.get("backend", "sqlite").lower()
-    if db_backend not in SUPPORTED_DB_BACKEND:
-        raise ValueError(
-            f"Only values from {SUPPORTED_DB_BACKEND} are supported. "
-            f"{db_backend} was supplied instead."
-        )
-    db_path: Path = data_folder_path.joinpath(db_config.get("path", "tasks.db"))
-    return (config_file_path, data_folder_path, db_backend, db_path)
+    if config_file_path.exists():
+        config = Config.from_yaml(config_file_path)
+    else:
+        config = Config()
+        config.to_yaml(config_file_path)
+    return config
+
+
+config: Config = load_config(DEFAULT_CONFIG_FILE_PATH)
