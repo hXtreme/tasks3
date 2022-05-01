@@ -16,7 +16,21 @@ UUID_LENGTH = 6
 
 
 @as_declarative()
-class Task:
+class Base:
+    """Declarative base class for SQLAlchemy models"""
+
+    @declared_attr
+    def __tablename__(cls):
+        return cls.__name__.lower()
+
+    id = Column(
+        String(length=UUID_LENGTH),
+        primary_key=True,
+        default=lambda: str(uuid.uuid4())[:UUID_LENGTH],
+    )
+
+
+class Task(Base):
     """
     Task Model
 
@@ -32,11 +46,6 @@ class Task:
         description: Description of the task.
     """
 
-    id = Column(
-        String(length=UUID_LENGTH),
-        primary_key=True,
-        default=lambda: str(uuid.uuid4())[:UUID_LENGTH],
-    )
     title = Column(Unicode, nullable=False)
     urgency = Column(Integer, nullable=False)
     importance = Column(Integer, nullable=False)
@@ -50,11 +59,6 @@ class Task:
         CheckConstraint(0 <= importance, "Importance interval check"),
         CheckConstraint(importance <= 4, "Importance interval check"),
     )
-
-    @declared_attr
-    def __tablename__(cls) -> str:
-        """Automatically set the correct table name for the model"""
-        return str.lower(cls.__name__)
 
     def _to_dict(self) -> dict:
         return dict(
