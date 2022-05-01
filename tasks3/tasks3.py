@@ -2,12 +2,23 @@
 
 import tasks3.db as db
 
+from functools import singledispatch
 from typing import List
+
+from tasks3.db import Task
+
 from sqlalchemy.engine import Engine
 from sqlalchemy.orm import Query
 
 
-def add(
+@singledispatch
+def add(task) -> str:
+    """Add a task"""
+    raise NotImplementedError(f"No handler for type {type(task)}")
+
+
+@add.register(str)
+def _(
     title: str,
     urgency: int,
     importance: int,
@@ -34,6 +45,19 @@ def add(
         folder=anchor_folder,
         description=description,
     )
+    return add(task, db_engine)
+
+
+@add.register(Task)
+def _(
+    task: Task,
+    db_engine: Engine,
+) -> str:
+    """Add a task
+
+    :param task: Task to add.
+    :param db_engine: Engine for the tasks database.
+    """
     with db.session_scope(db_engine) as session:
         session.add(task)
         session.flush()
