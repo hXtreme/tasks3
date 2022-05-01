@@ -2,6 +2,12 @@
 History
 =======
 
+0.2.8 (2022-05-01)
+------------------
+
+* Use dataclass to store configuration settings.
+* Flatten tasks3.config module into config.py file.
+
 0.2.7 (2022-04-30)
 ------------------
 
