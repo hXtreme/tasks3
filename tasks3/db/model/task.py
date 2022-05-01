@@ -1,24 +1,48 @@
 """Task database model"""
+import uuid
 
-from tasks3.db import model
+from sqlalchemy import (
+    CheckConstraint,
+    Column,
+    Integer,
+    JSON,
+    Unicode,
+    UnicodeText,
+    String,
+)
+from sqlalchemy.ext.declarative import as_declarative, declared_attr
 
-from collections import OrderedDict as odict
-from sqlalchemy import Column, Unicode, Integer, UnicodeText, CheckConstraint, JSON
+UUID_LENGTH = 6
 
 
-class Task(model.Base):
-    """Task database model
+@as_declarative()
+class Task:
+    """
+    Task Model
 
-    SQLAlchemy uses this class to define and interact with the
-    Task Table in the database.
+    SQLAlchemy declarative model for the tasks3 database containing tasks.
+
+    Attributes:
+        id: Unique ID for the task.
+        title: Title of the task.
+        urgency: Urgency level[0-4] of the task.
+        importance: Importance level[0-4] of the task.
+        tags: Set of tags to apply to the task.
+        folder: Anchor this task to a particular directory or file.
+        description: Description of the task.
     """
 
+    id = Column(
+        String(length=UUID_LENGTH),
+        primary_key=True,
+        default=lambda: str(uuid.uuid4())[:UUID_LENGTH],
+    )
     title = Column(Unicode, nullable=False)
     urgency = Column(Integer, nullable=False)
     importance = Column(Integer, nullable=False)
     tags = Column(JSON, nullable=False)
-    folder = Column(Unicode)
-    description = Column(UnicodeText)
+    folder = Column(Unicode, nullable=True)
+    description = Column(UnicodeText, nullable=True)
 
     __table_args__ = (
         CheckConstraint(0 <= urgency, "Urgency interval check"),
@@ -27,8 +51,13 @@ class Task(model.Base):
         CheckConstraint(importance <= 4, "Importance interval check"),
     )
 
-    def _to_dict(self) -> odict:
-        return odict(
+    @declared_attr
+    def __tablename__(cls) -> str:
+        """Automatically set the correct table name for the model"""
+        return str.lower(cls.__name__)
+
+    def _to_dict(self) -> dict:
+        return dict(
             id=self.id,
             title=self.title,
             urgency=self.urgency,
