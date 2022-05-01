@@ -80,7 +80,6 @@ Ready to contribute? Here's how to set up `tasks3` for local development.
    tests, including testing other Python versions with tox::
 
     $ flake8 tasks3 tests
-    $ python setup.py test or pytest
     $ tox
 
    To get flake8 and tox, just pip install them into your virtualenv.
@@ -109,7 +108,7 @@ Before you submit a pull request, check that it meets these guidelines:
 Tips
 ----
 
-To run a subset of tests::
+To run a subset of tests manually you can install pytest and run::
 
 $ pytest tests.test_tasks3
 
