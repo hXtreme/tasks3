@@ -30,7 +30,10 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install tox tox-gh-actions
+        pip install tox tox-gh-actions flake8
+    - name: Lint
+      run: |
+        flake8 tasks3 tests
     - name: Test with tox
       run: |
         tox
