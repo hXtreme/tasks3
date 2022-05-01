@@ -11,8 +11,7 @@ from sqlalchemy.engine import Engine
 from sqlalchemy.orm import Session, Query
 
 from tasks3 import db
-from tasks3.db import Task
-from tasks3.db.extension import session_scope
+from tasks3.db import Task, session_scope
 
 
 @pytest.fixture(params=["sqlite"])
