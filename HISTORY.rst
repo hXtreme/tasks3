@@ -2,6 +2,11 @@
 History
 =======
 
+0.2.4 (2022-04-30)
+------------------
+
+* Remove pytest from dependency and let tox handle testing.
+
 0.2.3 (2022-04-30)
 ------------------
 
