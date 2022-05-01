@@ -12,7 +12,7 @@ def init(db_engine: Engine) -> None:
 
     :param db_engine: engine for the database
     """
-    db.Base.metadata.create_all(bind=db_engine)
+    db.Task.metadata.create_all(bind=db_engine)
 
 
 def purge(db_engine: Engine) -> None:
@@ -29,4 +29,4 @@ def drop(db_engine: Engine) -> None:
 
     :param db_engine: engine for the database
     """
-    db.Base.metadata.drop_all(bind=db_engine)
+    db.Task.metadata.drop_all(bind=db_engine)
