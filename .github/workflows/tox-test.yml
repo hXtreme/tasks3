@@ -1,6 +1,6 @@
 # This workflow will install Python dependencies, run tests and lint using tox
 
-name: Run tests with tox
+name: tests
 
 on:
   push:
