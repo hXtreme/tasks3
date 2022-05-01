@@ -60,7 +60,7 @@ class Task(Base):
         CheckConstraint(importance <= 4, "Importance interval check"),
     )
 
-    def _to_dict(self) -> dict:
+    def to_dict(self) -> dict:
         return dict(
             id=self.id,
             title=self.title,
@@ -72,4 +72,4 @@ class Task(Base):
         )
 
     def __repr__(self) -> str:
-        return f"<Task{self._to_dict().__repr__()}>"
+        return f"<Task{self.to_dict().__repr__()}>"
