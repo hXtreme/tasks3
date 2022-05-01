@@ -2,7 +2,7 @@
 History
 =======
 
-0.2.5 (2022-04-30)
+0.2.6 (2022-04-30)
 ------------------
 
 * Flatten tasks3.db.model module into models.py
