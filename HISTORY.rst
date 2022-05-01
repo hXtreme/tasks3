@@ -2,6 +2,12 @@
 History
 =======
 
+0.2.7 (2022-04-30)
+------------------
+
+* Remove usage of deprecated  SQLAlchemy api ``db_engine.table_names``.
+* Remove deprecated pytest configuration option ``collect_ignore``.
+
 0.2.6 (2022-04-30)
 ------------------
 

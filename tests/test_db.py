@@ -6,7 +6,7 @@ import pytest
 
 from typing import Tuple
 from pathlib import Path
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, inspect
 from sqlalchemy.engine import Engine
 from sqlalchemy.orm import Session, Query
 
@@ -32,14 +32,16 @@ def test_db_init(tmp_path: Path, db_backend: str):
     assert not db_path.exists()
     db.init(db_engine)
     assert db_path.exists()
-    assert len(db_engine.table_names()) == 1
-    assert "task" in db_engine.table_names()
+    table_names = inspect(db_engine).get_table_names()
+    assert len(table_names) == 1
+    assert "task" in table_names
 
 
 def test_db_add_task(tmp_path: Path, db_backend: str):
     db_path, db_engine = get_db(tmp_path, db_backend)
     db.init(db_engine)
-    assert "task" in db_engine.table_names()
+    table_names = inspect(db_engine).get_table_names()
+    assert "task" in table_names
     task = Task(title="Title", urgency=2, importance=2, tags=["pytest"])
     session: Session
     count: int
@@ -52,7 +54,8 @@ def test_db_add_task(tmp_path: Path, db_backend: str):
 def test_db_purge(tmp_path: Path, db_backend: str):
     db_path, db_engine = get_db(tmp_path, db_backend)
     db.init(db_engine)
-    assert "task" in db_engine.table_names()
+    table_names = inspect(db_engine).get_table_names()
+    assert "task" in table_names
     task = Task(title="Title", urgency=2, importance=2, tags=["pytest"])
     session: Session
     count: int
@@ -69,7 +72,9 @@ def test_db_purge(tmp_path: Path, db_backend: str):
 def test_db_drop(tmp_path: Path, db_backend: str):
     db_path, db_engine = get_db(tmp_path, db_backend)
     db.init(db_engine)
-    assert "task" in db_engine.table_names()
+    table_names_before = inspect(db_engine).get_table_names()
+    assert "task" in table_names_before
     db.drop(db_engine)
-    assert len(db_engine.table_names()) == 0
-    assert "task" not in db_engine.table_names()
+    table_names_after = inspect(db_engine).get_table_names()
+    assert len(table_names_after) == 0
+    assert "task" not in table_names_after
