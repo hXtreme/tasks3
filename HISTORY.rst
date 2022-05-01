@@ -2,6 +2,13 @@
 History
 =======
 
+0.2.5 (2022-04-30)
+------------------
+
+* Flatten tasks3.db.model module into models.py
+* Linting changes
+* Minor refactoring
+
 0.2.4 (2022-04-30)
 ------------------
 
