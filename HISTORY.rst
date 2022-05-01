@@ -2,6 +2,13 @@
 History
 =======
 
+0.2.3 (2022-04-30)
+------------------
+
+* Migrate testing to github-workflow
+* Update SQLAlchemy package version.
+* Switch deployment workflow to python 3.9
+
 0.2.0 (2022-04-30)
 ------------------
 
