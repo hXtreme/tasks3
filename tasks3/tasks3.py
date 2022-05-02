@@ -17,7 +17,7 @@ def add(
     urgency: int,
     importance: int,
     tags: List[str],
-    anchor_folder: str,
+    folder: str,
     description: str,
     db_engine: Engine,
 ) -> str:
@@ -27,7 +27,7 @@ def add(
     :param urgency: Urgency level[0-4] for the new task.
     :param importance: Importance level[0-4] for the new task.
     :param tags: Set of tags to apply to the new task.
-    :param anchor_folder: Anchor this task to a particular directory or file.
+    :param folder: Delegate this task to a particular directory or file.
     :param description: Description of the task.
     :param db_engine: Engine for the tasks database.
     """
@@ -36,7 +36,7 @@ def add(
         urgency=urgency,
         importance=importance,
         tags=tags,
-        folder=anchor_folder,
+        folder=folder,
         description=description,
     )
     return add(task, db_engine)
@@ -65,7 +65,7 @@ def edit(
     urgency: int = None,
     importance: int = None,
     tags: List[str] = None,
-    anchor_folder: str = None,
+    folder: str = None,
     description: str = None,
 ):
     """Edit a task
@@ -76,12 +76,11 @@ def edit(
     :param urgency: Update urgency level[0-4] of the task.
     :param importance: Update importance level[0-4] of the task.
     :param tags: Set of tags to apply to the new task.
-    :param anchor_folder: Anchor this task to a particular directory or file.
+    :param folder: Delegate this task to a particular directory or file.
     :param description: Description of the task.
     """
-    task: db.Task
     with db.session_scope(db_engine) as session:
-        task = Query(db.Task, session).filter_by(id=id).one()
+        task: Task = Query(db.Task, session).filter_by(id=id).one()
         if title:
             task.title = title
         if urgency:
