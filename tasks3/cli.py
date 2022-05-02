@@ -1,9 +1,17 @@
 """Console script for tasks3."""
-from pathlib import Path
 import sys
+
+import tasks3
+import tasks3.db
+
 import click
+import sqlalchemy
+
+from pathlib import Path
+from typing import Optional, Iterable
 
 from tasks3.config import config
+from tasks3.db import Task
 
 from pkg_resources import iter_entry_points
 from click_plugins import with_plugins
@@ -25,7 +33,10 @@ def main(ctx: click.core.Context, db: Path):
 
     ctx.ensure_object(dict)
     config.db_path = db
+    engine = sqlalchemy.create_engine(config.db_uri)
+    tasks3.db.init(db_engine=engine)
     ctx.obj["config"] = config
+    ctx.obj["engine"] = engine
     return 0
 
 
@@ -139,29 +150,24 @@ def remove(ctx: click.core.Context, yes: bool, id: str):
     "--urgency",
     type=click.IntRange(min=0, max=4, clamp=True),
     default=2,
-    is_flag=True,
-    flag_value=4,
-    help="Level of urgency of the Task. "
-    "Higher the value (max of 4) greater the urgency. "
-    "Defaults to 2 when absent and 4 when present.",
+    show_default=True,
+    help="Level of urgency of the Task. " "Higher is more urgent.",
 )
 @click.option(
     "-i",
     "--importance",
     type=click.IntRange(min=0, max=4, clamp=True),
     default=2,
-    is_flag=True,
-    flag_value=4,
-    help="Level of importance of the Task. "
-    "Higher the value (max of 4) greater the importance. "
-    "Defaults to 2 when absent and 4 when present.",
+    show_default=True,
+    help="Level of importance of the Task. " "Higher is more important.",
 )
 @click.option("-t", "--tags", multiple=True, default=[], help="Tags for the Task.")
 @click.option(
     "-f",
     "--folder",
-    type=click.Path(exists=True, readable=False, file_okay=False, resolve_path=True),
-    help="Delegate Task to a specified directory or file.",
+    type=click.Path(exists=True, readable=False, resolve_path=True),
+    default=Path.cwd(),
+    help="Delegate Task to a specified directory or file.  [default: current working directory]",
 )
 @click.option(
     "-d", "--description", default="", help="A short description of the Task."
@@ -169,6 +175,7 @@ def remove(ctx: click.core.Context, yes: bool, id: str):
 @click.option(
     "--yes",
     default=False,
+    is_flag=True,
     help="Create task without confirmation?",
 )
 @click.pass_context
@@ -177,13 +184,30 @@ def add(
     title: str,
     urgency: int,
     importance: int,
-    tags: tuple,
+    tags: Iterable[str],
     folder: str,
-    description: str,
+    description: Optional[str],
     yes: bool,
 ):
     """Add a new task"""
-    pass
+    engine = ctx.obj["engine"]
+    description = description.replace("\\n", "\n").replace("\\t", "\t")
+    task = Task(
+        title=title,
+        urgency=urgency,
+        importance=importance,
+        tags=tags,
+        folder=folder,
+        description=description,
+    )
+    if not yes:
+        click.confirm(
+            f"{task.yaml()}\nAre you sure you want to add this task?",
+            abort=True,
+            default=True,
+        )
+    task_id = tasks3.add(task, db_engine=engine)
+    click.echo(f"Added Task:\n{task.short()}")
 
 
 @main.group()
