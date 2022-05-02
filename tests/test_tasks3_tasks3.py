@@ -24,22 +24,22 @@ def urgency(request) -> int:
     return request.param
 
 
-@pytest.fixture(params=[0, 4], ids=["Not Important", "Very Important"])
+@pytest.fixture(params=[2])
 def importance(request) -> int:
     return request.param
 
 
-@pytest.fixture(params=[["pytest"]])
+@pytest.fixture(params=[[], ["pytest"]])
 def tags(request) -> List[str]:
     return request.param
 
 
-@pytest.fixture(params=[".", None])
+@pytest.fixture(params=[None, "/", "/foo/bar/baz"])
 def anchor_path(request) -> List[str]:
     return request.param
 
 
-@pytest.fixture(params=["Testing tasks3 interface."])
+@pytest.fixture(params=[None, "Testing tasks3 interface."])
 def description(request) -> List[str]:
     return request.param
 
