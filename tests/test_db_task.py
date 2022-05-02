@@ -30,7 +30,12 @@ def tags(request) -> Set[str]:
 
 
 def test_task_create(title: str, urgency: int, importance: int, tags: Set[str]):
-    task = Task(title=title, urgency=urgency, importance=importance, tags=tags,)
+    task = Task(
+        title=title,
+        urgency=urgency,
+        importance=importance,
+        tags=tags,
+    )
     assert task.title == title
     assert task.urgency == urgency
     assert task.importance == importance
