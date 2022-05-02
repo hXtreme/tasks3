@@ -167,7 +167,10 @@ def remove(ctx: click.core.Context, yes: bool, id: str):
     "--folder",
     type=click.Path(readable=False, resolve_path=True, path_type=Path),
     default=Path.cwd(),
-    help="Delegate Task to a specified directory or file.  [default: current working directory]",
+    help=(
+        "Delegate Task to a specified directory or file.  "
+        "[default: current working directory]"
+    ),
 )
 @click.option(
     "-d", "--description", default="", help="A short description of the Task."
@@ -206,7 +209,7 @@ def add(
             abort=True,
             default=True,
         )
-    task_id = tasks3.add(task, db_engine=engine)
+    tasks3.add(task, db_engine=engine)
     click.echo(f"Added Task:\n{task.short()}")
 
 
