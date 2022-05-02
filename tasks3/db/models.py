@@ -1,6 +1,8 @@
 """Task database model"""
 import uuid
 
+from pathlib import Path
+from typing import Optional
 from sqlalchemy import (
     CheckConstraint,
     Column,
@@ -13,6 +15,10 @@ from sqlalchemy import (
 from sqlalchemy.ext.declarative import as_declarative, declared_attr
 
 UUID_LENGTH = 6
+
+BOLD = '\033[1m'
+UNDERLINE = '\033[4m'
+END = '\033[0m'
 
 
 @as_declarative()
@@ -70,6 +76,42 @@ class Task(Base):
             folder=self.folder,
             description=self.description,
         )
+
+    @property
+    def relative_folder(self) -> Optional[str]:
+        """Relative path to the folder this task is anchored to"""
+        if self.folder is None or len(self.folder) == 0:
+            return None
+        try:
+            folder = Path(self.folder).relative_to(Path.cwd())
+            return str(folder)
+        except ValueError:
+            return self.folder
+
+    def one_line(self) -> str:
+        """One line representation of the task"""
+        rep = "[      ] "
+        if self.id is not None and len(self.id) == UUID_LENGTH:
+            rep = f"[{self.id}] "
+        rep += f"{BOLD}{self.title}{END}"
+        if self.folder is not None:
+            rep += f" [path: {UNDERLINE}{self.relative_folder}{END}]"
+        return rep
+
+    def short(self) -> str:
+        """Short Human-friendly representation of the task"""
+        rep = "[      ] "
+        if self.id is not None and len(self.id) == UUID_LENGTH:
+            rep = f"[{self.id}] "
+        urgent = ("⏰" * self.urgency) + ("  " * (4 - self.urgency))
+        important = ("🚨" * self.importance) + (" " * (4 - self.importance))
+        rep += f"{BOLD}{self.title}{END} ({urgent}) ({important})"
+        if self.folder is not None:
+            rep += "\n  " + f"[path: {UNDERLINE}{self.relative_folder}{END}]"
+        if len(self.tags) > 0:
+            tags = [f"({tag})" for tag in self.tags]
+            rep += "\n  " + " ".join(tags)
+        return rep
 
     def yaml(self) -> str:
         top = (
