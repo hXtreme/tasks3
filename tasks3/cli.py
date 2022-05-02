@@ -188,7 +188,7 @@ def add(
     urgency: int,
     importance: int,
     tags: Iterable[str],
-    folder: str,
+    folder: Path,
     description: Optional[str],
     yes: bool,
 ):
@@ -200,7 +200,7 @@ def add(
         urgency=urgency,
         importance=importance,
         tags=tags,
-        folder=folder,
+        folder=str(folder),
         description=description,
     )
     if not yes:
