@@ -71,5 +71,21 @@ class Task(Base):
             description=self.description,
         )
 
+    def yaml(self) -> str:
+        top = (
+            f"title: {self.title}\n"
+            f"urgency: {self.urgency}\n"
+            f"importance: {self.importance}"
+        )
+        tags = "tags: null"
+        if len(self.tags) > 0:
+            tags = "tags:\n  - " + "\n  - ".join(self.tags)
+        folder = f"folder: {'null' if self.folder is None else self.folder}"
+        yaml = f"{top}\n{tags}\n{folder}\n"
+        if self.description is not None and len(self.description) > 0:
+            description = self.description.replace("\n", "\n  ")
+            yaml += f"description: >-\n  {description}\n"
+        return yaml
+
     def __repr__(self) -> str:
         return f"<Task{self.to_dict().__repr__()}>"
