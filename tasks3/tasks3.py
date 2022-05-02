@@ -89,8 +89,8 @@ def edit(
             task.importance = importance
         if tags:
             task.tags = tags
-        if anchor_folder:
-            task.folder = anchor_folder
+        if folder:
+            task.folder = folder
         if description:
             task.description = description
         session.add(task)
