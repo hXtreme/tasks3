@@ -30,7 +30,7 @@ A commandline tool to create and manage tasks and todos.
 Features
 --------
 
-* Easily create tasks from the commandline and deledate them to folders.
+* Easily create tasks from the commandline and delegate them to folders.
 
 Create a task in a specific folder with default settings.
 
