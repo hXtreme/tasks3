@@ -71,7 +71,7 @@ def task(ctx: click.core.Context):
 @click.option(
     "-f",
     "--folder",
-    type=click.Path(exists=True, readable=False, file_okay=False, resolve_path=True),
+    type=click.Path(readable=False, resolve_path=True, path_type=Path),
     help="Filter by delegated folder.",
 )
 @click.option("-d", "--description", type=str, help="Search in description.")
@@ -99,7 +99,7 @@ def search(
     help="Output format.",
     show_default=True,
 )
-@click.argument("id", type=str)
+@click.argument("id", type=str, required=False)
 @click.pass_context
 def show(ctx: click.core.Context, format: str, id: str):
     """Show the task in the specified FORMAT
@@ -165,7 +165,7 @@ def remove(ctx: click.core.Context, yes: bool, id: str):
 @click.option(
     "-f",
     "--folder",
-    type=click.Path(exists=True, readable=False, resolve_path=True),
+    type=click.Path(readable=False, resolve_path=True, path_type=Path),
     default=Path.cwd(),
     help="Delegate Task to a specified directory or file.  [default: current working directory]",
 )
