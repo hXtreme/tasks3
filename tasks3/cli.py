@@ -58,10 +58,10 @@ def task(ctx: click.core.Context):
 )
 @click.option("-t", "--tags", multiple=True, help="Filter by tags.")
 @click.option(
-    "-a",
-    "--anchor_folder",
+    "-f",
+    "--folder",
     type=click.Path(exists=True, readable=False, file_okay=False, resolve_path=True),
-    help="Filter by anchored folder.",
+    help="Filter by delegated folder.",
 )
 @click.option("-d", "--description", type=str, help="Search in description.")
 @click.pass_context
@@ -72,7 +72,7 @@ def search(
     urgency: int,
     importance: int,
     tags: list,
-    anchor_folder: str,
+    folder: str,
     description: str,
 ):
     """Search for tasks"""
@@ -158,10 +158,10 @@ def remove(ctx: click.core.Context, yes: bool, id: str):
 )
 @click.option("-t", "--tags", multiple=True, default=[], help="Tags for the Task.")
 @click.option(
-    "-a",
-    "--anchor_folder",
+    "-f",
+    "--folder",
     type=click.Path(exists=True, readable=False, file_okay=False, resolve_path=True),
-    help="Anchor the Task to a specified directory or file.",
+    help="Delegate Task to a specified directory or file.",
 )
 @click.option(
     "-d", "--description", default="", help="A short description of the Task."
@@ -178,7 +178,7 @@ def add(
     urgency: int,
     importance: int,
     tags: tuple,
-    anchor_folder: str,
+    folder: str,
     description: str,
     yes: bool,
 ):

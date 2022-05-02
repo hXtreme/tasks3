@@ -100,7 +100,7 @@ def test_task_add2(
         urgency=urgency,
         importance=importance,
         tags=tags,
-        anchor_folder=anchor_path,
+        folder=anchor_path,
         description=description,
         db_engine=db_engine,
     )
@@ -140,7 +140,7 @@ def test_task_edit1(tmp_path: Path, db_backend: str):
         urgency=urgency,
         importance=importance,
         tags=tags,
-        anchor_folder=anchor_path,
+        folder=anchor_path,
         description=description,
     )
     with db.session_scope(db_engine) as session:
@@ -168,7 +168,7 @@ def test_task_edit2(tmp_path: Path, db_backend: str):
         urgency=2,
         importance=2,
         tags=["old-tags"],
-        anchor_folder=".",
+        folder=".",
         description="Old description",
         db_engine=db_engine,
     )
@@ -179,7 +179,7 @@ def test_task_edit2(tmp_path: Path, db_backend: str):
         urgency=urgency,
         importance=importance,
         tags=tags,
-        anchor_folder=anchor_path,
+        folder=anchor_path,
         description=description,
     )
     with db.session_scope(db_engine) as session:
@@ -243,7 +243,7 @@ def test_task_remove2(
         urgency=urgency,
         importance=importance,
         tags=tags,
-        anchor_folder=anchor_path,
+        folder=anchor_path,
         description=description,
         db_engine=db_engine,
     )
