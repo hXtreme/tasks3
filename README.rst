@@ -30,6 +30,26 @@ A commandline tool to create and manage tasks and todos.
 Features
 --------
 
+* Easily create tasks from the commandline and deledate them to folders.
+
+.. code-block:: bash
+        :caption: Create a task in a specific folder with default settings.
+
+        tasks3 task add --title "Think of a cool name" --folder "~/Documents/story" --yes
+        Added Task:
+        [e1c100] Think of a cool name (⏰⏰    ) (🚨🚨  )
+          [path: ~/Documents/story]
+
+.. code-block:: bash
+        :caption: Create a task in a current folder with custom settings and description.
+
+        tasks3 task add --title "Try new model" --urgency 4 --importance 3 --description "Try:\n - model with 3 layers.\n - model with 4 layers." --yes
+        Added Task:
+        [a0a5f4] Try new model (⏰⏰⏰⏰) (🚨🚨🚨 )
+            Try:
+             - model with 3 layers.
+             - model with 4 layers.
+
 * TODO
 
 Credits
