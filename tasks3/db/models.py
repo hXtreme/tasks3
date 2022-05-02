@@ -16,9 +16,9 @@ from sqlalchemy.ext.declarative import as_declarative, declared_attr
 
 UUID_LENGTH = 6
 
-BOLD = '\033[1m'
-UNDERLINE = '\033[4m'
-END = '\033[0m'
+BOLD = "\033[1m"
+UNDERLINE = "\033[4m"
+END = "\033[0m"
 
 
 @as_declarative()
