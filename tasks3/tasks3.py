@@ -12,13 +12,7 @@ from sqlalchemy.orm import Query
 
 
 @singledispatch
-def add(task) -> str:
-    """Add a task"""
-    raise NotImplementedError(f"No handler for type {type(task)}")
-
-
-@add.register(str)
-def _(
+def add(
     title: str,
     urgency: int,
     importance: int,
