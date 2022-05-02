@@ -32,8 +32,9 @@ Features
 
 * Easily create tasks from the commandline and deledate them to folders.
 
+Create a task in a specific folder with default settings.
+
 .. code-block:: bash
-        :caption: Create a task in a specific folder with default settings.
 
         tasks3 task add --title "Think of a cool name" \
             --folder "~/Documents/story" \
@@ -42,8 +43,9 @@ Features
         [e1c100] Think of a cool name (⏰⏰    ) (🚨🚨  )
           [path: ~/Documents/story]
 
+Create a task in a current folder with custom settings and description.
+
 .. code-block:: bash
-        :caption: Create a task in a current folder with custom settings and description.
 
         tasks3 task add --title "Try new model" \
             --urgency 4 --importance 3 \
