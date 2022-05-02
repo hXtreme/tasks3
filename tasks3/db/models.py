@@ -89,12 +89,12 @@ class Task(Base):
             return self.folder
 
     def one_line(self) -> str:
-        """One line representation of the task"""
+        """One line Human-friendly representation of the task"""
         rep = "[      ] "
         if self.id is not None and len(self.id) == UUID_LENGTH:
             rep = f"[{self.id}] "
         rep += f"{BOLD}{self.title}{END}"
-        if self.folder is not None:
+        if self.relative_folder is not None and self.relative_folder != ".":
             rep += f" [path: {UNDERLINE}{self.relative_folder}{END}]"
         return rep
 
@@ -106,11 +106,13 @@ class Task(Base):
         urgent = ("⏰" * self.urgency) + ("  " * (4 - self.urgency))
         important = ("🚨" * self.importance) + (" " * (4 - self.importance))
         rep += f"{BOLD}{self.title}{END} ({urgent}) ({important})"
-        if self.folder is not None:
+        if self.relative_folder is not None and self.relative_folder != ".":
             rep += "\n  " + f"[path: {UNDERLINE}{self.relative_folder}{END}]"
         if len(self.tags) > 0:
             tags = [f"({tag})" for tag in self.tags]
             rep += "\n  " + " ".join(tags)
+        if self.description is not None and len(self.description) > 0:
+            rep += "\n    " + self.description.replace("\n", "\n    ")
         return rep
 
     def yaml(self) -> str:
