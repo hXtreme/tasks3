@@ -218,13 +218,6 @@ def db(ctx: click.core.Context):
 
 
 @db.command()
-@click.pass_context
-def init(ctx: click.core.Context):
-    """Initialize and setup the database"""
-    pass
-
-
-@db.command()
 @click.confirmation_option(prompt="Are you sure you want to purge all tasks?")
 @click.pass_context
 def purge(ctx: click.core.Context):
