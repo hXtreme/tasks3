@@ -2,6 +2,13 @@
 History
 =======
 
+0.3.0 (2022-05-02)
+------------------
+
+* Remove `tasks3 db init` cli command.
+* Implement `tasks3 task add` cli command.
+* Implement `task.yaml`, `task.short`, `task.one_line` methods to display task.
+
 0.2.8 (2022-05-01)
 ------------------
 
