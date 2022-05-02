@@ -1,11 +1,9 @@
 """Main module."""
 
-import tasks3.db as db
-
 from functools import singledispatch
 from typing import List
 
-from tasks3.db import Task
+from tasks3.db import Task, session_scope
 
 from sqlalchemy.engine import Engine
 from sqlalchemy.orm import Query
@@ -31,7 +29,7 @@ def add(
     :param description: Description of the task.
     :param db_engine: Engine for the tasks database.
     """
-    task = db.Task(
+    task = Task(
         title=title,
         urgency=urgency,
         importance=importance,
@@ -52,7 +50,7 @@ def _(
     :param task: Task to add.
     :param db_engine: Engine for the tasks database.
     """
-    with db.session_scope(db_engine) as session:
+    with session_scope(db_engine) as session:
         session.add(task)
         session.flush()
         return task.id
@@ -79,8 +77,8 @@ def edit(
     :param folder: Delegate this task to a particular directory or file.
     :param description: Description of the task.
     """
-    with db.session_scope(db_engine) as session:
-        task: Task = Query(db.Task, session).filter_by(id=id).one()
+    with session_scope(db_engine) as session:
+        task: Task = Query(Task, session).filter_by(id=id).one()
         if title:
             task.title = title
         if urgency:
@@ -96,14 +94,13 @@ def edit(
         session.add(task)
 
 
-def remove(id: str, db_engine: Engine) -> db.Task:
+def remove(id: str, db_engine: Engine) -> Task:
     """Remove a Task
 
     :param id: ID of the task to remove.
     :param db_engine: Engine for the tasks database.
     """
-    task: db.Task
-    with db.session_scope(db_engine) as session:
-        task = Query(db.Task, session).filter_by(id=id).one()
+    with session_scope(db_engine) as session:
+        task: Task = Query(Task, session).filter_by(id=id).one()
         session.delete(task)
     return task
