@@ -2,6 +2,12 @@
 History
 =======
 
+0.3.2 (2022-05-02)
+------------------
+
+* Add workflow to check for package compatability with PyPI.
+  This should make sure that the issue with v0.3.0 does not occur again.
+
 0.3.1 (2022-05-02)
 ------------------
 
