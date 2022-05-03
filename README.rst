@@ -37,9 +37,9 @@ Easily create tasks from the commandline and delegate them to folders.
 
 Create a task in a specific folder with default settings.
 
-.. code-block:: bash
+.. code-block:: console
 
-        tasks3 add --title "Think of a cool name" \
+        $ tasks3 add --title "Think of a cool name" \
             --folder "~/Documents/story" \
             --yes
         Added Task:
@@ -48,9 +48,9 @@ Create a task in a specific folder with default settings.
 
 Create a task in a current folder with custom settings and description.
 
-.. code-block:: bash
+.. code-block:: console
 
-        tasks3 add --title "Try new model" \
+        $ tasks3 add --title "Try new model" \
             --urgency 4 --importance 3 \
             --description "Try:\n - model with 3 layers.\n - model with 4 layers." \
             --yes
@@ -67,18 +67,18 @@ You can search for tasks using various filters.
 
 You can search for tasks with a specific importance value.
 
-.. code-block:: bash
+.. code-block:: console
 
-        tasks3 search --importance 2
+        $ tasks3 search --importance 2
         [4a14d0] What is right here and now
         [f79155] Think of a cool name [path: /home/<user>/Documents/project]
         [2ce91b] See home [path: /home]
 
 You can restrict search to a folder and its sub-directories.
 
-.. code-block:: bash
+.. code-block:: console
 
-        tasks3 search --folder ~/Documents/project --output-format yaml
+        $ tasks3 search --folder ~/Documents/project --output-format yaml
         title: Think of a Cool name
         urgency: 2
         importance: 2
@@ -92,31 +92,33 @@ Run ``tasks3 search --help`` to get see a full list off options.
 Show Tasks
 ==========
 
-* You can show all tasks under current directory.
+You can show all tasks under current directory.
 
-.. code-block:: bash
+.. code-block:: console
 
-        tasks3 show
+        $ tasks3 show
         [a0a5f4] Try new model (⏰⏰⏰⏰) (🚨🚨🚨 )
             Try:
              model with 3 layers.
              model with 4 layers.
         [4a14d0] What is right here and now (⏰⏰    ) (🚨🚨  )
 
-* You can also show a particular task by specifying its id.
+You can also show a particular task by specifying its id.
 
-.. code-block:: bash
+.. code-block:: console
 
-        tasks3 show 1d8a9a
+        $ tasks3 show 1d8a9a
         [1d8a9a] Give a Title to this Task. (⏰⏰    ) (🚨🚨🚨🚨)
           (Hello tasks3)
             Task with
             multi-line
             desc
 
-.. code-block:: bash
+If you prefer to see the task in a different format, you can use the ``--output-format`` option.
 
-        tasks3 show --output-format json 1d8a9a
+.. code-block:: console
+
+        $ tasks3 show --output-format json 1d8a9a
         {
           "id": "1d8a9a",
           "title": "Give a Title to this Task.",

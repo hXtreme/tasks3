@@ -44,7 +44,8 @@ Once you have a copy of the source, you can install it with:
 
 .. code-block:: console
 
-    $ python setup.py install
+    $ pip install -e .
+    $ pip install -r requirements_dev.txt
 
 
 .. _Github repo: https://github.com/hXtreme/tasks3

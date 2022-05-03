@@ -68,7 +68,8 @@ Ready to contribute? Here's how to set up `tasks3` for local development.
 
     $ mkvirtualenv tasks3
     $ cd tasks3/
-    $ python setup.py develop
+    $ pip install -e .
+    $ pip install -r requirements_dev.txt
 
 4. Create a branch for local development::
 
