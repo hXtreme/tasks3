@@ -1,4 +1,5 @@
 """Task database model"""
+import json
 import uuid
 
 from pathlib import Path
@@ -129,6 +130,10 @@ class Task(Base):
             description = self.description.replace("\n", "\n  ")
             yaml += f"description: >-\n  {description}\n"
         return yaml
+
+    def json(self) -> str:
+        """JSON representation of the task"""
+        return json.dumps(self.to_dict(), indent=2)
 
     def __repr__(self) -> str:
         return f"<Task{self.to_dict().__repr__()}>"

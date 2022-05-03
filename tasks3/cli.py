@@ -8,9 +8,9 @@ import click
 import sqlalchemy
 
 from pathlib import Path
-from typing import Optional, Iterable
+from typing import Optional, Iterable, List
 
-from tasks3.config import config
+from tasks3.config import config, OutputFormat
 from tasks3.db import Task
 
 from pkg_resources import iter_entry_points
@@ -75,19 +75,49 @@ def task(ctx: click.core.Context):
     help="Filter by delegated folder.",
 )
 @click.option("-d", "--description", type=str, help="Search in description.")
+@click.option(
+    "-o",
+    "--output-format",
+    type=click.Choice([fmt.value for fmt in OutputFormat]),
+    default=config.preferred_format,
+    show_default=True,
+    help="Output format.",
+)
 @click.pass_context
 def search(
     ctx: click.core.Context,
-    id: str,
-    title: str,
-    urgency: int,
-    importance: int,
-    tags: list,
-    folder: str,
-    description: str,
+    id: Optional[str],
+    title: Optional[str],
+    urgency: Optional[int],
+    importance: Optional[int],
+    tags: Optional[List[str]],
+    folder: Optional[Path],
+    description: Optional[str],
+    output_format: str,
 ):
     """Search for tasks"""
-    pass
+    engine = ctx.obj["engine"]
+    results: List[Task] = tasks3.search(
+        db_engine=engine,
+        id=id,
+        title=title,
+        urgency=urgency,
+        importance=importance,
+        tags=tags,
+        folder=folder,
+        description=description,
+    )
+    output_format = OutputFormat(output_format)
+    if output_format == OutputFormat.oneline:
+        fmt = Task.one_line
+    elif output_format == OutputFormat.short:
+        fmt = Task.short
+    elif output_format == OutputFormat.yaml:
+        fmt = lambda self: Task.yaml(self=self) + "\n"
+    elif output_format == OutputFormat.json:
+        fmt = Task.json
+    for task in results:
+        click.echo(fmt(self=task))
 
 
 @task.command()

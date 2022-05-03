@@ -23,10 +23,20 @@ class DBBackend(Enum):
     postgresql = "postgresql"
 
 
+class OutputFormat(Enum):
+    """Supported output formats"""
+
+    oneline = "oneline"
+    short = "short"
+    yaml = "yaml"
+    json = "json"
+
+
 @dataclass
 class Config:
     db: str = str(DEFAULT_DATA_FOLDER_PATH / "tasks.db")
     backend: str = DBBackend.sqlite.value
+    preferred_format: str = OutputFormat.short.value
 
     @property
     def db_backend(self) -> DBBackend:
