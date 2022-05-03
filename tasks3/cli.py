@@ -79,7 +79,7 @@ def task(ctx: click.core.Context):
     "-o",
     "--output-format",
     type=click.Choice([fmt.value for fmt in OutputFormat]),
-    default=config.preferred_format,
+    default=config.search_output_format,
     show_default=True,
     help="Output format.",
 )

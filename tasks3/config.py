@@ -36,7 +36,7 @@ class OutputFormat(Enum):
 class Config:
     db: str = str(DEFAULT_DATA_FOLDER_PATH / "tasks.db")
     backend: str = DBBackend.sqlite.value
-    preferred_format: str = OutputFormat.short.value
+    search_output_format: str = OutputFormat.oneline.value
     show_output_format: str = OutputFormat.short.value
 
     @property
