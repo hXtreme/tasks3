@@ -42,14 +42,13 @@ class Task(Base):
 
     SQLAlchemy declarative model for the tasks3 database containing tasks.
 
-    Attributes:
-        id: Unique ID for the task.
-        title: Title of the task.
-        urgency: Urgency level[0-4] of the task.
-        importance: Importance level[0-4] of the task.
-        tags: Set of tags to apply to the task.
-        folder: Anchor this task to a particular directory or file.
-        description: Description of the task.
+    :param id: Unique ID for the task.
+    :param title: Title of the task.
+    :param urgency: Urgency level[0-4] of the task.
+    :param importance: Importance level[0-4] of the task.
+    :param tags: Set of tags to apply to the task.
+    :param folder: Anchor this task to a particular directory or file.
+    :param description: Description of the task.
     """
 
     title = Column(Unicode, nullable=False)

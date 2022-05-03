@@ -51,7 +51,7 @@ def task(ctx: click.core.Context):
 @click.option(
     "--id",
     type=str,
-    help="Filter by id. "
+    help="Filter by id."
     "You can pass /partial-id/ to search for all tasks whose id contains partial-id.",
 )
 @click.option("-T", "--title", type=str, help="Search by Title")
