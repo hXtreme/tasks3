@@ -25,7 +25,7 @@ test_requirements = [
 setup(
     author="Harsh Parekh",
     author_email="harsh_parekh@outlook.com",
-    python_requires=">=3.5",
+    python_requires=">=3.9",
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Intended Audience :: End Users/Desktop",
