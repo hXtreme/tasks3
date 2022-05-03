@@ -44,6 +44,7 @@ def search(
         if description:
             query = query.filter(Task.description.contains(description))
         results = query.order_by(Task.urgency, Task.importance).all()
+        results.reverse()
         if tags:
             results = [task for task in results if set(tags) <= set(task.tags)]
         return results
