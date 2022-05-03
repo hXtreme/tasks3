@@ -116,6 +116,7 @@ class Task(Base):
         return rep
 
     def yaml(self) -> str:
+        """YAML representation of the task"""
         top = (
             f"title: {self.title}\n"
             f"urgency: {self.urgency}\n"
