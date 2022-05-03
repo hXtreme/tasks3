@@ -117,20 +117,29 @@ def search(
 
 @task.command()
 @click.option(
-    "-f",
-    "--format",
-    type=click.Choice(["YAML"]),
-    default="YAML",
+    "-o",
+    "--output-format",
+    type=click.Choice([fmt.value for fmt in OutputFormat]),
+    default=config.show_output_format,
     help="Output format.",
     show_default=True,
 )
 @click.argument("id", type=str, required=False)
 @click.pass_context
-def show(ctx: click.core.Context, format: str, id: str):
+def show(ctx: click.core.Context, output_format: str, id: str):
     """Show the task in the specified FORMAT
 
-    ID is the id of the Task to be printed.
+    ID is the id of the Task to be printed;
+    if not specified, all tasks in current directory are printed.
     """
+    engine = ctx.obj["engine"]
+    fmt = __fmt(OutputFormat(output_format))
+    if id is None:
+        tasks = tasks3.search(db_engine=engine, folder=str(Path.cwd()))
+    else:
+        tasks = tasks3.search(db_engine=engine, id=id)[:1]
+    for task in tasks:
+        click.echo(fmt(self=task))
     pass
 
 
