@@ -297,7 +297,11 @@ def __fmt(format: OutputFormat) -> Callable[[Task], str]:
     elif format == OutputFormat.short:
         fmt = Task.short
     elif format == OutputFormat.yaml:
-        fmt = lambda self: Task.yaml(self=self) + "\n"
+
+        def _fmt(self):
+            return Task.yaml(self=self) + "\n"
+
+        fmt = _fmt
     elif format == OutputFormat.json:
         fmt = Task.json
     return fmt
