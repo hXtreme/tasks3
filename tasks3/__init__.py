@@ -2,6 +2,6 @@
 
 __author__ = """Harsh Parekh"""
 __email__ = "harsh_parekh@outlook.com"
-__version__ = "0.4.3"
+__version__ = "0.4.4"
 
 from tasks3.tasks3 import add, edit, remove, search  # noqa: F401
