@@ -13,11 +13,7 @@ from typing import Callable, Optional, Iterable, List
 from tasks3.config import config, OutputFormat
 from tasks3.db import Task
 
-from pkg_resources import iter_entry_points
-from click_plugins import with_plugins
 
-
-@with_plugins(iter_entry_points("click_command_tree"))
 @click.group()
 @click.option(
     "--db",
@@ -40,14 +36,7 @@ def main(ctx: click.core.Context, db: Path):
     return 0
 
 
-@main.group()
-@click.pass_context
-def task(ctx: click.core.Context):
-    """Manage a task"""
-    pass
-
-
-@task.command()
+@main.command()
 @click.option(
     "--id",
     type=str,
@@ -115,7 +104,7 @@ def search(
         click.echo(fmt(self=task))
 
 
-@task.command()
+@main.command()
 @click.option(
     "-o",
     "--output-format",
@@ -143,7 +132,7 @@ def show(ctx: click.core.Context, output_format: str, id: str):
     pass
 
 
-@task.command()
+@main.command()
 @click.option(
     "--yes",
     default=False,
@@ -159,7 +148,7 @@ def edit(ctx: click.core.Context, yes: bool, id: str):
     pass
 
 
-@task.command()
+@main.command()
 @click.option(
     "--yes",
     default=False,
@@ -175,7 +164,7 @@ def remove(ctx: click.core.Context, yes: bool, id: str):
     pass
 
 
-@task.command()
+@main.command()
 @click.option(
     "-T", "--title", default="Give a Title to this Task.", help="Title of the Task."
 )

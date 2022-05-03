@@ -39,7 +39,7 @@ Create a task in a specific folder with default settings.
 
 .. code-block:: bash
 
-        tasks3 task add --title "Think of a cool name" \
+        tasks3 add --title "Think of a cool name" \
             --folder "~/Documents/story" \
             --yes
         Added Task:
@@ -50,7 +50,7 @@ Create a task in a current folder with custom settings and description.
 
 .. code-block:: bash
 
-        tasks3 task add --title "Try new model" \
+        tasks3 add --title "Try new model" \
             --urgency 4 --importance 3 \
             --description "Try:\n - model with 3 layers.\n - model with 4 layers." \
             --yes
@@ -69,7 +69,7 @@ You can search for tasks with a specific importance value.
 
 .. code-block:: bash
 
-        tasks3 task search --importance 2
+        tasks3 search --importance 2
         [4a14d0] What is right here and now
         [f79155] Think of a cool name [path: /home/<user>/Documents/project]
         [2ce91b] See home [path: /home]
@@ -78,7 +78,7 @@ You can restrict search to a folder and its sub-directories.
 
 .. code-block:: bash
 
-        tasks3 task search --folder ~/Documents/project --output-format yaml
+        tasks3 search --folder ~/Documents/project --output-format yaml
         title: Think of a Cool name
         urgency: 2
         importance: 2
@@ -96,7 +96,7 @@ Show Tasks
 
 .. code-block:: bash
 
-        tasks3 task show
+        tasks3 show
         [a0a5f4] Try new model (⏰⏰⏰⏰) (🚨🚨🚨 )
             Try:
              model with 3 layers.
@@ -107,7 +107,7 @@ Show Tasks
 
 .. code-block:: bash
 
-        tasks3 task show 1d8a9a
+        tasks3 show 1d8a9a
         [1d8a9a] Give a Title to this Task. (⏰⏰    ) (🚨🚨🚨🚨)
           (Hello tasks3)
             Task with
@@ -116,7 +116,7 @@ Show Tasks
 
 .. code-block:: bash
 
-        tasks3 task show --output-format json 1d8a9a
+        tasks3 show --output-format json 1d8a9a
         {
           "id": "1d8a9a",
           "title": "Give a Title to this Task.",

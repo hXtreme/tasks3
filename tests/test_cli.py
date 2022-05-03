@@ -34,21 +34,3 @@ def test_command_line_interface_main_help(cli_runner):
     help_result = cli_runner.invoke(cli.main, ["--help"])
     assert help_result.exit_code == 0
     assert "--help     Show this message and exit." in help_result.output
-
-
-def test_command_line_interface_task(cli_runner):
-    """Test the CLI (tasks3 task)"""
-    task_result = cli_runner.invoke(cli.main, ["task"])
-    assert task_result.exit_code == 0
-    assert cli.task.__doc__ in task_result.output
-    for command in cli.task.commands:
-        assert command in task_result.output
-
-
-def test_command_line_interface_task_help(cli_runner):
-    """Test the CLI (tasks3 task --help)"""
-    task_help_result = cli_runner.invoke(cli.main, ["task", "--help"])
-    assert task_help_result.exit_code == 0
-    assert cli.task.__doc__ in task_help_result.output
-    for command in cli.task.commands:
-        assert command in task_help_result.output
