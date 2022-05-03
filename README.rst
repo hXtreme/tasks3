@@ -30,7 +30,10 @@ A commandline tool to create and manage tasks and todos.
 Features
 --------
 
-* Easily create tasks from the commandline and delegate them to folders.
+Create Tasks
+============
+
+Easily create tasks from the commandline and delegate them to folders.
 
 Create a task in a specific folder with default settings.
 
@@ -57,7 +60,77 @@ Create a task in a current folder with custom settings and description.
              - model with 3 layers.
              - model with 4 layers.
 
-* TODO
+Search Tasks
+============
+
+You can search for tasks using various filters.
+
+You can search for tasks with a specific importance value.
+
+.. code-block:: bash
+
+        tasks3 task search --importance 2
+        [4a14d0] What is right here and now
+        [f79155] Think of a cool name [path: /home/<user>/Documents/project]
+        [2ce91b] See home [path: /home]
+
+You can restrict search to a folder and its sub-directories.
+
+.. code-block:: bash
+
+        tasks3 task search --folder ~/Documents/project --output-format yaml
+        title: Think of a Cool name
+        urgency: 2
+        importance: 2
+        tags: null
+        folder: /home/<user>/Documents/project
+
+You can also search for sub-strings in task title or description.
+It is also possible to restrict the search to tasks that have a specific set of tags.
+Run ``tasks3 search --help`` to get see a full list off options.
+
+Show Tasks
+==========
+
+* You can show all tasks under current directory.
+
+.. code-block:: bash
+
+        tasks3 task show
+        [a0a5f4] Try new model (⏰⏰⏰⏰) (🚨🚨🚨 )
+            Try:
+             model with 3 layers.
+             model with 4 layers.
+        [4a14d0] What is right here and now (⏰⏰    ) (🚨🚨  )
+
+* You can also show a particular task by specifying its id.
+
+.. code-block:: bash
+
+        tasks3 task show 1d8a9a
+        [1d8a9a] Give a Title to this Task. (⏰⏰    ) (🚨🚨🚨🚨)
+          (Hello tasks3)
+            Task with
+            multi-line
+            desc
+
+.. code-block:: bash
+
+        tasks3 task show --output-format json 1d8a9a
+        {
+          "id": "1d8a9a",
+          "title": "Give a Title to this Task.",
+          "urgency": 2,
+          "importance": 4,
+          "tags": [
+            "Hello tasks3"
+          ],
+          "folder": "/home/<user>/Documents/tasks3",
+          "description": "Task with \nmulti-line \ndesc"
+        }
+
+* TODO: Edit existing tasks.
+* TODO: Delete tasks.
 
 Credits
 -------
