@@ -2,6 +2,15 @@
 History
 =======
 
+0.4.0 (2022-05-03)
+------------------
+
+* Add the ability to search for tasks.
+* Add json output format for tasks.
+* Implement the ``tasks3 task show`` cli endpoint.
+* Update docs.
+* Add Output format preference to config.
+
 0.3.3 (2022-05-02)
 ------------------
 
