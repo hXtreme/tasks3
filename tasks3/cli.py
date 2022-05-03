@@ -8,7 +8,7 @@ import click
 import sqlalchemy
 
 from pathlib import Path
-from typing import Optional, Iterable, List
+from typing import Callable, Optional, Iterable, List
 
 from tasks3.config import config, OutputFormat
 from tasks3.db import Task
@@ -108,14 +108,7 @@ def search(
         description=description,
     )
     output_format = OutputFormat(output_format)
-    if output_format == OutputFormat.oneline:
-        fmt = Task.one_line
-    elif output_format == OutputFormat.short:
-        fmt = Task.short
-    elif output_format == OutputFormat.yaml:
-        fmt = lambda self: Task.yaml(self=self) + "\n"
-    elif output_format == OutputFormat.json:
-        fmt = Task.json
+    fmt = __fmt(output_format)
     for task in results:
         click.echo(fmt(self=task))
 
@@ -280,6 +273,23 @@ def move(ctx: click.core.Context, dest_db: str):
     DEST_DB will be overwriten if it already exists.
     """
     pass
+
+
+def __fmt(format: OutputFormat) -> Callable[[Task], str]:
+    """
+    Return a function that formats a Task object according to the specified format.
+
+    :param format: The format to use.
+    """
+    if format == OutputFormat.oneline:
+        fmt = Task.one_line
+    elif format == OutputFormat.short:
+        fmt = Task.short
+    elif format == OutputFormat.yaml:
+        fmt = lambda self: Task.yaml(self=self) + "\n"
+    elif format == OutputFormat.json:
+        fmt = Task.json
+    return fmt
 
 
 if __name__ == "__main__":
