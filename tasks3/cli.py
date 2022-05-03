@@ -71,7 +71,7 @@ def task(ctx: click.core.Context):
 @click.option(
     "-f",
     "--folder",
-    type=click.Path(readable=False, resolve_path=True, path_type=Path),
+    type=click.Path(readable=False, path_type=Path),
     help="Filter by delegated folder.",
 )
 @click.option("-d", "--description", type=str, help="Search in description.")
@@ -97,6 +97,8 @@ def search(
 ):
     """Search for tasks"""
     engine = ctx.obj["engine"]
+    if folder:
+        folder = str(folder.expanduser().resolve())
     results: List[Task] = tasks3.search(
         db_engine=engine,
         id=id,
@@ -188,7 +190,7 @@ def remove(ctx: click.core.Context, yes: bool, id: str):
 @click.option(
     "-f",
     "--folder",
-    type=click.Path(readable=False, resolve_path=True, path_type=Path),
+    type=click.Path(readable=False, path_type=Path),
     default=Path.cwd(),
     help=(
         "Delegate Task to a specified directory or file.  "
@@ -223,7 +225,7 @@ def add(
         urgency=urgency,
         importance=importance,
         tags=tags,
-        folder=str(folder),
+        folder=str(folder.expanduser().resolve()),
         description=description,
     )
     if not yes:
