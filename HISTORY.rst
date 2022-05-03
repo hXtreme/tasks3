@@ -10,6 +10,7 @@ History
 * Implement the ``tasks3 task show`` cli endpoint.
 * Update docs.
 * Add Output format preference to config.
+* Make the cli interface easier to use (flatten the task command tree)
 
 0.3.3 (2022-05-02)
 ------------------
