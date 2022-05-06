@@ -134,7 +134,7 @@ If you prefer to see the task in a different format, you can use the ``--output-
 Shell Integration
 =================
 
-tasks3 supports shell integration for bash and zsh, tasks3 will automatically
+tasks3 supports shell integration for bash, zsh, and fish; tasks3 will automatically
 run ``tasks3 show -o oneline`` when you ``cd`` into a directory to show
 the tasks in that directory.
 
