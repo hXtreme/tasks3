@@ -238,7 +238,7 @@ def add(
 
 @main.command()
 @click.pass_context
-@click.argument("shell", type=click.Choice(["bash", "zsh"]))
+@click.argument("shell", type=click.Choice(["bash", "zsh", "fish"]))
 def shell(ctx: click.core.Context, shell: str):
     """
     Integrate with your shell
@@ -246,13 +246,17 @@ def shell(ctx: click.core.Context, shell: str):
     This command will generate a script to integrate with the specified shell.
     Evaluate the script to setup the integration.
 
-        eval "$(tasks3 shell zsh)"
+        Ex. eval "$(tasks3 shell zsh)"
     """
-    click.echo("function _chpwd_tasks3() { tasks3 show -o oneline; }")
     if shell == "bash":
+        click.echo("function _chpwd_tasks3() { tasks3 show -o oneline; }")
         click.echo('function cd () { builtin cd "$@"; _chpwd_tasks3; }')
     elif shell == "zsh":
+        click.echo("function _chpwd_tasks3() { tasks3 show -o oneline; }")
         click.echo("chpwd_functions+=(_chpwd_tasks3)")
+    elif shell == "fish":
+        click.echo("function _chpwd_tasks3; tasks3 show -o oneline; end")
+        click.echo("function cd; builtin cd $argv; _chpwd_tasks3; end")
 
 
 @main.group()
