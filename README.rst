@@ -131,6 +131,22 @@ If you prefer to see the task in a different format, you can use the ``--output-
           "description": "Task with \nmulti-line \ndesc"
         }
 
+Shell Integration
+=================
+
+tasks3 supports shell integration for bash and zsh, tasks3 will automatically
+run ``tasks3 show -o oneline`` when you ``cd`` into a directory to show
+the tasks in that directory.
+
+You can setup shell integration by adding the following command to your ``.rc`` file.
+
+.. code-block:: shell
+
+        eval "$(tasks3 shell $(basename $SHELL))"
+
+.. note:: Pull requests to support additional shells are greatly appreciated.
+        Please see Contributing_ page for information on how to contribute.
+
 * TODO: Edit existing tasks.
 * TODO: Delete tasks.
 
@@ -139,5 +155,6 @@ Credits
 
 This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypackage`_ project template.
 
+.. _Contributing: ./contributing.html
 .. _Cookiecutter: https://github.com/audreyr/cookiecutter
 .. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
