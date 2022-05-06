@@ -236,6 +236,25 @@ def add(
     click.echo(f"Added Task:\n{task.short()}")
 
 
+@main.command()
+@click.pass_context
+@click.argument("shell", type=click.Choice(["bash", "zsh"]))
+def shell(ctx: click.core.Context, shell: str):
+    """
+    Integrate with your shell
+
+    This command will generate a script to integrate with the specified shell.
+    Evaluate the script to setup the integration.
+
+        eval "$(tasks3 shell zsh)"
+    """
+    click.echo("function _chpwd_tasks3() { tasks3 show -o oneline; }")
+    if shell == "bash":
+        click.echo('function cd () { builtin cd "$@"; _chpwd_tasks3; }')
+    elif shell == "zsh":
+        click.echo("chpwd_functions+=(_chpwd_tasks3)")
+
+
 @main.group()
 @click.pass_context
 def db(ctx: click.core.Context):
