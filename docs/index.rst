@@ -13,6 +13,8 @@ Welcome to tasks3's documentation!
    authors
    history
 
+.. include:: ../README.rst
+
 Indices and tables
 ==================
 * :ref:`genindex`

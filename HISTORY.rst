@@ -6,6 +6,8 @@ History
 ------------------
 
 * Added shell integration for zsh and bash.
+* Improve the index page.
+* Add more info to Contributing page.
 
 0.4.4 (2022-05-03)
 ------------------

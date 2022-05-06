@@ -91,7 +91,8 @@ Ready to contribute? Here's how to set up `tasks3` for local development.
     $ git commit -m "Your detailed description of your changes."
     $ git push origin name-of-your-bugfix-or-feature
 
-7. Submit a pull request through the GitHub website.
+7. [Optional] Add your details (alias, email, website) to ``AUTHORS.rst`` file.
+8. Submit a pull request through the GitHub website.
 
 Pull Request Guidelines
 -----------------------
