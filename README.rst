@@ -60,6 +60,20 @@ Create a task in a current folder with custom settings and description.
              - model with 3 layers.
              - model with 4 layers.
 
+Edit Existing Tasks
+===================
+
+You can edit existing tasks with the `tasks3 edit` command.
+
+You can use `edit` to update the urgency of a task.
+
+.. code-block:: console
+
+        $ tasks3 edit --urgency 4 e1c100
+        Updated Task:
+        [e1c100] Think of a cool name (⏰⏰⏰⏰) (🚨🚨  )
+          [path: ~/Documents/story]
+
 Search Tasks
 ============
 
@@ -147,7 +161,6 @@ You can setup shell integration by adding the following command to your ``.rc`` 
 .. note:: Pull requests to support additional shells are greatly appreciated.
         Please see Contributing_ page for information on how to contribute.
 
-* TODO: Edit existing tasks.
 * TODO: Delete tasks.
 
 Credits

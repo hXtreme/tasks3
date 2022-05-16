@@ -133,19 +133,91 @@ def show(ctx: click.core.Context, output_format: str, id: str):
 
 
 @main.command()
+@click.option("-T", "--title", default=None, help="New title for this Task.")
 @click.option(
-    "--yes",
+    "-u",
+    "--urgency",
+    type=click.IntRange(min=0, max=4, clamp=True),
+    default=None,
+    help="New urgency for this Task. " "Higher is more urgent.",
+)
+@click.option(
+    "-i",
+    "--importance",
+    type=click.IntRange(min=0, max=4, clamp=True),
+    default=None,
+    help="New importance for this Task. " "Higher is more important.",
+)
+@click.option("-t", "--tags", multiple=True, default=[], help="Tags for the Task.")
+@click.option(
+    "-f",
+    "--folder",
+    type=click.Path(readable=False, path_type=Path),
+    default=None,
+    help=("Delegate this Task to this directory or file."),
+)
+@click.option(
+    "-d", "--description", default=None, help="New description for this Task."
+)
+@click.option(
+    "--confirm",
     default=False,
-    help="Overwrite task data without confirmation?",
+    is_flag=True,
+    help="Confirm before overwriting task.",
 )
 @click.argument("id", type=str)
 @click.pass_context
-def edit(ctx: click.core.Context, yes: bool, id: str):
+def edit(
+    ctx: click.core.Context,
+    title: str,
+    urgency: int,
+    importance: int,
+    tags: Iterable[str],
+    folder: Path,
+    description: Optional[str],
+    confirm: bool,
+    id: str,
+):
     """Edit a Task
 
     ID is the id of the Task to be edited.
     """
-    pass
+    engine = ctx.obj["engine"]
+    search_results = tasks3.search(db_engine=engine, id=id)
+    if len(search_results) != 1:
+        click.echo(f"Couldn't uniquely find Task with id={id}.", err=True)
+        return 1
+    if confirm:
+        task = search_results[0].yaml()
+        new_task = tasks3.edit(
+            db_engine=engine,
+            id=id,
+            title=title,
+            urgency=urgency,
+            importance=importance,
+            tags=tags,
+            folder=folder,
+            description=description,
+            dry_run=True,
+        ).yaml()
+        click.confirm(
+            f"Existing:\n{task}\n"
+            f"Updated:\n{new_task}\n"
+            "Are you sure you want to update?",
+            abort=True,
+            default=True,
+        )
+    task = tasks3.edit(
+        db_engine=engine,
+        id=id,
+        title=title,
+        urgency=urgency,
+        importance=importance,
+        tags=tags,
+        folder=folder,
+        description=description,
+    )
+    click.echo(f"Updated Task:\n{task.short()}")
 
 
 @main.command()
