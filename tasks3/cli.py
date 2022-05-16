@@ -201,7 +201,9 @@ def edit(
             dry_run=True,
         ).yaml()
         click.confirm(
-            f"Existing:\n{task}\nUpdated:\n{new_task}\nAre you sure you want to update?",
+            f"Existing:\n{task}\n"
+            f"Updated:\n{new_task}\n"
+            "Are you sure you want to update?",
             abort=True,
             default=True,
         )
