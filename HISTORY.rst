@@ -6,6 +6,7 @@ History
 ------------------
 
 * Added support to edit existing tasks.
+* Update dev-requirements.
 
 0.5.1 (2022-05-06)
 ------------------
