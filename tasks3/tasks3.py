@@ -106,7 +106,8 @@ def edit(
     tags: List[str] = None,
     folder: str = None,
     description: str = None,
-):
+    dry_run: bool = False,
+) -> Task:
     """Edit a task
 
     :param id: ID of the task to edit.
@@ -132,7 +133,12 @@ def edit(
             task.folder = folder
         if description:
             task.description = description
+        if dry_run:
+            task = Task(**task.to_dict())
+            session.rollback()
+            return task
         session.add(task)
+        return task
 
 
 def remove(id: str, db_engine: Engine) -> Task:
