@@ -22,6 +22,15 @@ tasks3
 
 A commandline tool to create and manage tasks and todos.
 
+Most task management tools are their own applications, so to manage tasks you have to
+perform context switching by leaving what you're working on
+to go to the task manager application.
+
+``tasks3`` aims to solve that by bringing your tasks to you instead.
+
+Each task is automatically assigned to the directory it was created in
+and you can easily retrieve tasks under a directory.
+
 
 * Free software: GNU General Public License v3
 * Documentation: https://tasks3.readthedocs.io.
@@ -29,6 +38,16 @@ A commandline tool to create and manage tasks and todos.
 
 Features
 --------
+
+Help
+====
+
+It is easy to explore all capabilities of ``tasks3`` by running ``tasks3 --help``.
+Each command also has its own help page which can be accessed by running:
+
+.. code-block:: console
+
+        $ tasks3 <command> --help
 
 Create Tasks
 ============
@@ -63,9 +82,9 @@ Create a task in a current folder with custom settings and description.
 Edit Existing Tasks
 ===================
 
-You can edit existing tasks with the `tasks3 edit` command.
+You can edit existing tasks with the ``tasks3 edit`` command.
 
-You can use `edit` to update the urgency of a task.
+For example: You can use ``edit`` to update the urgency of a task.
 
 .. code-block:: console
 
