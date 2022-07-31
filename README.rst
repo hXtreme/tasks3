@@ -14,11 +14,6 @@ tasks3
         :alt: Documentation Status
 
 
-.. image:: https://pyup.io/repos/github/hXtreme/tasks3/shield.svg
-     :target: https://pyup.io/repos/github/hXtreme/tasks3/
-     :alt: Updates
-
-
 
 A commandline tool to create and manage tasks and todos.
 
