@@ -159,6 +159,20 @@ If you prefer to see the task in a different format, you can use the ``--output-
           "description": "Task with \nmulti-line \ndesc"
         }
 
+
+Delete Tasks
+============
+
+You can use the ``tasks3 delete <task_id>`` command to delete a task.
+
+.. note:: I will be adding a way to simply mark a task as done in the future.
+        prefer using that instead of deleting tasks.
+
+.. code-block:: console
+
+        $ tasks3 remove --yes 2e0b84
+        Removed Task: [2e0b84] Adding support for task deletion (⏰⏰    ) (🚨🚨  )
+
 Shell Integration
 =================
 

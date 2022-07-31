@@ -222,9 +222,11 @@ def edit(
 
 @main.command()
 @click.option(
+    "-y",
     "--yes",
     default=False,
-    help="Delete task without confirmation?",
+    is_flag=True,
+    help="Delete task without confirmation.",
 )
 @click.argument("id", type=str)
 @click.pass_context
@@ -233,7 +235,20 @@ def remove(ctx: click.core.Context, yes: bool, id: str):
 
     ID is the id of the Task to be removed.
     """
-    pass
+    engine = ctx.obj["engine"]
+    if not yes:
+        task = tasks3.search(db_engine=engine, id=id)
+        if len(task) != 1:
+            click.echo(f"Couldn't uniquely find Task with id={id}.", err=True)
+            return 1
+        task = task[0]
+        click.confirm(
+            f"{task.yaml()}\nAre you sure you want to delete this Task?",
+            abort=True,
+            default=False,
+        )
+    task = tasks3.remove(db_engine=engine, id=id)
+    click.echo(f"Removed Task: {task.short()}")
 
 
 @main.command()
