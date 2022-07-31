@@ -2,6 +2,12 @@
 History
 =======
 
+0.7.0: (2022-07-30)
+-------------------
+
+* Added support to delete a task from the cli.
+* Updated dependencies.
+
 0.6.0 (2022-05-16)
 ------------------
 
