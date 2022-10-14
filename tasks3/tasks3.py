@@ -13,6 +13,7 @@ def search(
     db_engine: Engine,
     id: Optional[str] = None,
     title: Optional[str] = None,
+    done: Optional[bool] = None,
     urgency: Optional[int] = None,
     importance: Optional[int] = None,
     tags: Optional[List[str]] = None,
@@ -23,6 +24,7 @@ def search(
 
     :param id: Search for tasks that start with ``id``.
     :param title: Search for tasks with this substring in title.
+    :param done: Search for tasks that are done.
     :param urgency: Search for tasks with this urgency level.
     :param importance: Search for tasks with this importance level.
     :param tags: Search for tasks with all these tags.
@@ -39,6 +41,8 @@ def search(
             query = query.filter(Task.id.contains(id))
         if title:
             query = query.filter(Task.title.contains(title))
+        if done is not None:
+            query = query.filter(Task.done == done)
         if folder:
             query = query.filter(Task.folder.like(f"{folder}%"))
         if description:

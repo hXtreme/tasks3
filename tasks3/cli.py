@@ -44,6 +44,7 @@ def main(ctx: click.core.Context, db: Path):
     "You can pass /partial-id/ to search for all tasks whose id contains partial-id.",
 )
 @click.option("-T", "--title", type=str, help="Search by Title")
+@click.option("-x", "--done", type=click.Choice(["any", "yes", "no"]), help="Filter by done status.")
 @click.option(
     "-u",
     "--urgency",
@@ -77,6 +78,7 @@ def search(
     ctx: click.core.Context,
     id: Optional[str],
     title: Optional[str],
+    done: Optional[str],
     urgency: Optional[int],
     importance: Optional[int],
     tags: Optional[List[str]],
@@ -86,12 +88,17 @@ def search(
 ):
     """Search for tasks"""
     engine = ctx.obj["engine"]
+    if done == "any":
+        done = None
+    if done is not None:
+        done: bool = (done == "yes")
     if folder:
         folder = str(folder.expanduser().resolve())
     results: List[Task] = tasks3.search(
         db_engine=engine,
         id=id,
         title=title,
+        done=done,
         urgency=urgency,
         importance=importance,
         tags=tags,

@@ -5,6 +5,7 @@ import uuid
 from pathlib import Path
 from typing import Optional
 from sqlalchemy import (
+    Boolean,
     CheckConstraint,
     Column,
     Integer,
@@ -45,6 +46,7 @@ class Task(Base):
 
     :param id: Unique ID for the task.
     :param title: Title of the task.
+    :param done: Set the task as Done.
     :param urgency: Urgency level[0-4] of the task.
     :param importance: Importance level[0-4] of the task.
     :param tags: Set of tags to apply to the task.
@@ -53,6 +55,7 @@ class Task(Base):
     """
 
     title = Column(Unicode, nullable=False)
+    done: bool = Column(Boolean, default=False, nullable=False)
     urgency = Column(Integer, nullable=False)
     importance = Column(Integer, nullable=False)
     tags = Column(JSON, nullable=False)
@@ -70,6 +73,7 @@ class Task(Base):
         return dict(
             id=self.id,
             title=self.title,
+            done=self.done,
             urgency=self.urgency,
             importance=self.importance,
             tags=self.tags,
@@ -119,6 +123,7 @@ class Task(Base):
         """YAML representation of the task"""
         top = (
             f"title: {self.title}\n"
+            f"done: {self.done}\n"
             f"urgency: {self.urgency}\n"
             f"importance: {self.importance}"
         )
