@@ -142,6 +142,13 @@ def show(ctx: click.core.Context, output_format: str, id: str):
 @main.command()
 @click.option("-T", "--title", default=None, help="New title for this Task.")
 @click.option(
+    "-x",
+    "--done",
+    default=None,
+    type=click.Choice(["no", "yes"]),
+    help="New done status for this Task.",
+)
+@click.option(
     "-u",
     "--urgency",
     type=click.IntRange(min=0, max=4, clamp=True),
@@ -177,6 +184,7 @@ def show(ctx: click.core.Context, output_format: str, id: str):
 def edit(
     ctx: click.core.Context,
     title: str,
+    done: str,
     urgency: int,
     importance: int,
     tags: Iterable[str],
@@ -194,12 +202,15 @@ def edit(
     if len(search_results) != 1:
         click.echo(f"Couldn't uniquely find Task with id={id}.", err=True)
         return 1
+    if done is not None:
+        done: bool = (done == "yes")
     if confirm:
         task = search_results[0].yaml()
         new_task = tasks3.edit(
             db_engine=engine,
             id=id,
             title=title,
+            done=done,
             urgency=urgency,
             importance=importance,
             tags=tags,
@@ -218,6 +229,7 @@ def edit(
         db_engine=engine,
         id=id,
         title=title,
+        done=done,
         urgency=urgency,
         importance=importance,
         tags=tags,
@@ -225,6 +237,19 @@ def edit(
         description=description,
     )
     click.echo(f"Updated Task:\n{task.short()}")
+
+
+@main.command()
+@click.argument("id", type=str)
+@click.pass_context
+def mark(ctx: click.core.Context, id: str):
+    """Toggle Task's done status
+
+    ID is the id of the Task to be updated.
+    """
+    engine = ctx.obj["engine"]
+    task = tasks3.toggle_status(id=id, db_engine=engine)
+    click.echo(task.short())
 
 
 @main.command()

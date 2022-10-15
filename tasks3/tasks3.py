@@ -105,6 +105,7 @@ def edit(
     id: str,
     db_engine: Engine,
     title: str = None,
+    done: bool = None,
     urgency: int = None,
     importance: int = None,
     tags: List[str] = None,
@@ -117,6 +118,7 @@ def edit(
     :param id: ID of the task to edit.
     :param db_engine: Engine for the tasks database.
     :param title: Update title of the task.
+    :param done: Update task done status.
     :param urgency: Update urgency level[0-4] of the task.
     :param importance: Update importance level[0-4] of the task.
     :param tags: Set of tags to apply to the new task.
@@ -127,6 +129,8 @@ def edit(
         task: Task = Query(Task, session).filter_by(id=id).one()
         if title:
             task.title = title
+        if done is not None:
+            task.done = done
         if urgency:
             task.urgency = urgency
         if importance:
@@ -144,6 +148,28 @@ def edit(
         session.add(task)
         return task
 
+
+def toggle_status(
+    id: str,
+    db_engine: Engine,
+    dry_run: bool = False,
+) -> Task:
+    """
+    Toggle task done flag.
+
+    :param id: ID of the task to edit.
+    :param db_engine: Engine for the tasks database.
+    """
+    with session_scope(db_engine) as session:
+        task: Task = Query(Task, session).filter_by(id=id).one()
+        task.done = not task.done
+        if dry_run:
+            task = Task(**task.to_dict())
+            session.rollback()
+            return task
+        session.add(task)
+        return task
+    ...
 
 def remove(id: str, db_engine: Engine) -> Task:
     """Remove a Task
