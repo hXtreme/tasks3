@@ -18,6 +18,7 @@ def db_backend(request) -> str:
 def title(request) -> str:
     return request.param
 
+
 @pytest.fixture(params=[True, False])
 def done(request) -> bool:
     return request.param
@@ -116,7 +117,7 @@ def test_task_add2(
     with db.session_scope(db_engine) as session:
         task: db.Task = session.query(db.Task).filter_by(id=id).one()
         assert task.title == title
-        assert task.done ==done
+        assert task.done == done
         assert task.urgency == urgency
         assert task.importance == importance
         assert task.tags == tags

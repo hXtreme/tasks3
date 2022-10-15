@@ -174,6 +174,7 @@ def toggle_status(
         return task
     ...
 
+
 def remove(id: str, db_engine: Engine) -> Task:
     """Remove a Task
 

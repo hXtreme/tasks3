@@ -44,7 +44,12 @@ def main(ctx: click.core.Context, db: Path):
     "You can pass /partial-id/ to search for all tasks whose id contains partial-id.",
 )
 @click.option("-T", "--title", type=str, help="Search by Title")
-@click.option("-x", "--done", type=click.Choice(["any", "yes", "no"]), help="Filter by done status.")
+@click.option(
+    "-x",
+    "--done",
+    type=click.Choice(["any", "yes", "no"]),
+    help="Filter by done status.",
+)
 @click.option(
     "-u",
     "--urgency",
@@ -91,7 +96,7 @@ def search(
     if done == "any":
         done = None
     if done is not None:
-        done: bool = (done == "yes")
+        done: bool = done == "yes"
     if folder:
         folder = str(folder.expanduser().resolve())
     results: List[Task] = tasks3.search(
@@ -203,7 +208,7 @@ def edit(
         click.echo(f"Couldn't uniquely find Task with id={id}.", err=True)
         return 1
     if done is not None:
-        done: bool = (done == "yes")
+        done: bool = done == "yes"
     if confirm:
         task = search_results[0].yaml()
         new_task = tasks3.edit(
