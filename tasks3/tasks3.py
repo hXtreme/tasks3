@@ -13,6 +13,7 @@ def search(
     db_engine: Engine,
     id: Optional[str] = None,
     title: Optional[str] = None,
+    done: Optional[bool] = None,
     urgency: Optional[int] = None,
     importance: Optional[int] = None,
     tags: Optional[List[str]] = None,
@@ -23,6 +24,7 @@ def search(
 
     :param id: Search for tasks that start with ``id``.
     :param title: Search for tasks with this substring in title.
+    :param done: Search for tasks that are done.
     :param urgency: Search for tasks with this urgency level.
     :param importance: Search for tasks with this importance level.
     :param tags: Search for tasks with all these tags.
@@ -39,6 +41,8 @@ def search(
             query = query.filter(Task.id.contains(id))
         if title:
             query = query.filter(Task.title.contains(title))
+        if done is not None:
+            query = query.filter(Task.done == done)
         if folder:
             query = query.filter(Task.folder.like(f"{folder}%"))
         if description:
@@ -53,6 +57,7 @@ def search(
 @singledispatch
 def add(
     title: str,
+    done: bool,
     urgency: int,
     importance: int,
     tags: List[str],
@@ -63,6 +68,7 @@ def add(
     """Add a task
 
     :param title: Title for the new task.
+    :param done: Set the task as Done.
     :param urgency: Urgency level[0-4] for the new task.
     :param importance: Importance level[0-4] for the new task.
     :param tags: Set of tags to apply to the new task.
@@ -72,6 +78,7 @@ def add(
     """
     task = Task(
         title=title,
+        done=done,
         urgency=urgency,
         importance=importance,
         tags=tags,
@@ -101,6 +108,7 @@ def edit(
     id: str,
     db_engine: Engine,
     title: str = None,
+    done: bool = None,
     urgency: int = None,
     importance: int = None,
     tags: List[str] = None,
@@ -113,6 +121,7 @@ def edit(
     :param id: ID of the task to edit.
     :param db_engine: Engine for the tasks database.
     :param title: Update title of the task.
+    :param done: Update task done status.
     :param urgency: Update urgency level[0-4] of the task.
     :param importance: Update importance level[0-4] of the task.
     :param tags: Set of tags to apply to the new task.
@@ -123,6 +132,8 @@ def edit(
         task: Task = Query(Task, session).filter_by(id=id).one()
         if title:
             task.title = title
+        if done is not None:
+            task.done = done
         if urgency:
             task.urgency = urgency
         if importance:
@@ -139,6 +150,29 @@ def edit(
             return task
         session.add(task)
         return task
+
+
+def toggle_status(
+    id: str,
+    db_engine: Engine,
+    dry_run: bool = False,
+) -> Task:
+    """
+    Toggle task done flag.
+
+    :param id: ID of the task to edit.
+    :param db_engine: Engine for the tasks database.
+    """
+    with session_scope(db_engine) as session:
+        task: Task = Query(Task, session).filter_by(id=id).one()
+        task.done = not task.done
+        if dry_run:
+            task = Task(**task.to_dict())
+            session.rollback()
+            return task
+        session.add(task)
+        return task
+    ...
 
 
 def remove(id: str, db_engine: Engine) -> Task:

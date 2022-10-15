@@ -19,6 +19,11 @@ def title(request) -> str:
     return request.param
 
 
+@pytest.fixture(params=[True, False])
+def done(request) -> bool:
+    return request.param
+
+
 @pytest.fixture(params=[0, 4], ids=["Not Urgent", "Very Urgent"])
 def urgency(request) -> int:
     return request.param
@@ -57,6 +62,7 @@ def get_db_engine(tmp_path: Path, backend: str) -> str:
 def test_task_add1(
     tmp_path: Path,
     title,
+    done,
     urgency,
     importance,
     tags,
@@ -67,6 +73,7 @@ def test_task_add1(
     db_engine = get_db_engine(tmp_path, db_backend)
     task = db.Task(
         title=title,
+        done=done,
         urgency=urgency,
         importance=importance,
         tags=tags,
@@ -77,6 +84,7 @@ def test_task_add1(
     with db.session_scope(db_engine) as session:
         task: db.Task = session.query(db.Task).filter_by(id=id).one()
         assert task.title == title
+        assert task.done == done
         assert task.urgency == urgency
         assert task.importance == importance
         assert task.tags == tags
@@ -87,6 +95,7 @@ def test_task_add1(
 def test_task_add2(
     tmp_path: Path,
     title,
+    done,
     urgency,
     importance,
     tags,
@@ -97,6 +106,7 @@ def test_task_add2(
     db_engine = get_db_engine(tmp_path, db_backend)
     id = tasks3.add(
         title,
+        done=done,
         urgency=urgency,
         importance=importance,
         tags=tags,
@@ -107,6 +117,7 @@ def test_task_add2(
     with db.session_scope(db_engine) as session:
         task: db.Task = session.query(db.Task).filter_by(id=id).one()
         assert task.title == title
+        assert task.done == done
         assert task.urgency == urgency
         assert task.importance == importance
         assert task.tags == tags
@@ -155,8 +166,9 @@ def test_task_edit1(tmp_path: Path, db_backend: str):
 
 def test_task_edit2(tmp_path: Path, db_backend: str):
     db_engine = get_db_engine(tmp_path, db_backend)
-    title, urgency, importance, tags, anchor_path, description = (
+    title, done, urgency, importance, tags, anchor_path, description = (
         "New Title",
+        True,
         4,
         4,
         ["new-tags"],
@@ -165,6 +177,7 @@ def test_task_edit2(tmp_path: Path, db_backend: str):
     )
     id = tasks3.add(
         "Old title",
+        done=False,
         urgency=2,
         importance=2,
         tags=["old-tags"],
@@ -176,6 +189,7 @@ def test_task_edit2(tmp_path: Path, db_backend: str):
         id=id,
         db_engine=db_engine,
         title=title,
+        done=done,
         urgency=urgency,
         importance=importance,
         tags=tags,
@@ -185,6 +199,7 @@ def test_task_edit2(tmp_path: Path, db_backend: str):
     with db.session_scope(db_engine) as session:
         task: db.Task = session.query(db.Task).filter_by(id=id).one()
         assert task.title == title
+        assert task.done == done
         assert task.urgency == urgency
         assert task.importance == importance
         assert task.tags == tags
@@ -240,6 +255,7 @@ def test_task_remove2(
     db_engine = get_db_engine(tmp_path, db_backend)
     id = tasks3.add(
         title,
+        done=False,
         urgency=urgency,
         importance=importance,
         tags=tags,
