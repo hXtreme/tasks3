@@ -57,6 +57,7 @@ def search(
 @singledispatch
 def add(
     title: str,
+    done: bool,
     urgency: int,
     importance: int,
     tags: List[str],
@@ -67,6 +68,7 @@ def add(
     """Add a task
 
     :param title: Title for the new task.
+    :param done: Set the task as Done.
     :param urgency: Urgency level[0-4] for the new task.
     :param importance: Importance level[0-4] for the new task.
     :param tags: Set of tags to apply to the new task.
@@ -76,6 +78,7 @@ def add(
     """
     task = Task(
         title=title,
+        done=done,
         urgency=urgency,
         importance=importance,
         tags=tags,
