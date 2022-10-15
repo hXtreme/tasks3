@@ -110,7 +110,8 @@ class Task(Base):
             rep = f"[{self.id}] "
         urgent = ("⏰" * self.urgency) + ("  " * (4 - self.urgency))
         important = ("🚨" * self.importance) + (" " * (4 - self.importance))
-        rep += f"{BOLD}{STRIKETHROUGH if self.done else ''}{self.title}{END} ({urgent}) ({important})"
+        rep += f"{BOLD}{STRIKETHROUGH if self.done else ''}{self.title}{END}"
+        rep += f" ({urgent}) ({important})"
         if self.relative_folder is not None and self.relative_folder != ".":
             rep += "\n  " + f"[path: {UNDERLINE}{self.relative_folder}{END}]"
         if len(self.tags) > 0:
