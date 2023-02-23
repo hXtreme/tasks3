@@ -160,13 +160,22 @@ If you prefer to see the task in a different format, you can use the ``--output-
         }
 
 
+Complete Tasks
+==============
+
+You can use the ``tasks3 mark <task_id>`` command or the ``tasks3 edit --done <task_id>`` command to mark a task as completed.
+
+.. code-block:: console
+
+        $ tasks3 mark 2e0b84
+        [2e0b84] A̶d̶d̶i̶n̶g̶ ̶s̶u̶p̶p̶o̶r̶t̶ ̶f̶o̶r̶ ̶t̶a̶s̶k̶ ̶c̶o̶m̶p̶l̶e̶t̶i̶o̶n̶ (⏰⏰    ) (🚨🚨  )
+
 Delete Tasks
 ============
 
 You can use the ``tasks3 delete <task_id>`` command to delete a task.
 
-.. note:: I will be adding a way to simply mark a task as done in the future,
-        prefer using that instead of deleting tasks.
+.. note:: Deleting is a destructive action, prefer to mark the task as complete if you want to hide a task.
 
 .. code-block:: console
 
