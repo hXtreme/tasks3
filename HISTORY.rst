@@ -2,6 +2,12 @@
 History
 =======
 
+0.8.0: (2023-02-22)
+-------------------
+
+* Add support to mark tasks as done.
+* Update dependencies
+
 0.7.0: (2022-07-30)
 -------------------
 
