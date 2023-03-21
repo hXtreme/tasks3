@@ -199,8 +199,6 @@ You can setup shell integration by adding the following command to your ``.rc`` 
 .. note:: Pull requests to support additional shells are greatly appreciated.
         Please see Contributing_ page for information on how to contribute.
 
-* TODO: Delete tasks.
-
 Credits
 -------
 
