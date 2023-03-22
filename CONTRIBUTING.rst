@@ -15,7 +15,7 @@ Types of Contributions
 Report Bugs
 ~~~~~~~~~~~
 
-Report bugs at https://github.com/hXtreme/tasks3/issues.
+Report bugs at https://git.parekh.page/tasks3/issues.
 
 If you are reporting a bug, please include:
 
@@ -45,7 +45,7 @@ articles, and such.
 Submit Feedback
 ~~~~~~~~~~~~~~~
 
-The best way to send feedback is to file an issue at https://github.com/hXtreme/tasks3/issues.
+The best way to send feedback is to file an issue at https://git.parekh.page/tasks3/issues.
 
 If you are proposing a feature:
 
@@ -104,7 +104,7 @@ Before you submit a pull request, check that it meets these guidelines:
    your new functionality into a function with a docstring, and add the
    feature to the list in README.rst.
 3. The pull request should work for Python 3.9, 3.10, and for PyPy. Check
-   https://github.com/hXtreme/tasks3/actions/workflows/tox-test.yml
+   https://git.parekh.page/tasks3/actions/workflows/tox-test.yml
    and make sure that the tests pass for all supported Python versions.
 
 Tips
