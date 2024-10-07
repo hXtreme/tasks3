@@ -8,4 +8,4 @@ coverage==7.4.3
 Sphinx==6.2.1
 sphinx-rtd-theme==1.2.2
 twine==4.0.2
-black==24.2.0
+black==24.10.0
