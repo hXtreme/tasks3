@@ -9,6 +9,5 @@ Sphinx==6.2.1
 sphinx-rtd-theme==1.2.2
 twine==6.0.1
 black==24.10.0
-pytest==5.4.3
 pyYAML==5.4
-Click==8.0.0
+Click==8.1.6
