@@ -10,6 +10,5 @@ sphinx-rtd-theme==1.2.2
 twine==6.0.1
 black==24.10.0
 pytest==5.4.3
-pytest-runner==5.2
-pyYAML==5.3.1
-Click==7.1.2
+pyYAML==5.4
+Click==8.0.0
