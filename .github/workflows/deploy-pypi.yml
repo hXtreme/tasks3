@@ -3,7 +3,7 @@ name: Deploy package to PyPI
 
 on:
   push:
-    tags: 
+    tags:
     - '*'
 
 jobs:
