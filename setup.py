@@ -25,15 +25,15 @@ test_requirements = [
 setup(
     author="Harsh Parekh",
     author_email="harsh_parekh@outlook.com",
-    python_requires=">=3.9",
+    python_requires=">=3.12",
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Intended Audience :: End Users/Desktop",
         "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
         "Natural Language :: English",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.9",
-        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
     ],
     description="A commandline tool to create and manage tasks and todos.",
     entry_points={"console_scripts": ["tasks3=tasks3.cli:main",],},
