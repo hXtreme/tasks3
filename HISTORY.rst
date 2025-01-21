@@ -2,6 +2,12 @@
 History
 =======
 
+0.9.1: (2025-01-20)
+-------------------
+
+* Improve UX for `tasks3 show` command
+* Fix docs build issues
+
 0.9.0: (2025-01-20)
 -------------------
 
