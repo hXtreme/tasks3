@@ -1,4 +1,5 @@
 """Console script for tasks3."""
+
 import sys
 
 import tasks3
@@ -136,7 +137,7 @@ def show(ctx: click.core.Context, output_format: str, id: str):
     engine = ctx.obj["engine"]
     fmt = __fmt(OutputFormat(output_format))
     if id is None:
-        tasks = tasks3.search(db_engine=engine, folder=str(Path.cwd()))
+        tasks = tasks3.search(db_engine=engine, done=False, folder=str(Path.cwd()))
     else:
         tasks = tasks3.search(db_engine=engine, id=id)[:1]
     for task in tasks:
