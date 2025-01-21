@@ -1,4 +1,5 @@
 """Task database model"""
+
 import json
 import uuid
 
