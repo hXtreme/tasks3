@@ -199,11 +199,4 @@ You can setup shell integration by adding the following command to your ``.rc`` 
 .. note:: Pull requests to support additional shells are greatly appreciated.
         Please see Contributing_ page for information on how to contribute.
 
-Credits
--------
 
-This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypackage`_ project template.
-
-.. _Contributing: ./contributing.html
-.. _Cookiecutter: https://github.com/audreyr/cookiecutter
-.. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
