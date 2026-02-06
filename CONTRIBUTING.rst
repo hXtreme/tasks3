@@ -64,12 +64,13 @@ Ready to contribute? Here's how to set up `tasks3` for local development.
 
     $ git clone git@github.com:your_name_here/tasks3.git
 
-3. Install your local copy into a virtualenv. Assuming you have virtualenvwrapper installed, this is how you set up your fork for local development::
+3. Install your local copy into a virtualenv. Assuming you have virtualenv installed, this is how you set up your fork for local development::
 
-    $ mkvirtualenv tasks3
     $ cd tasks3/
-    $ pip install -e .
+    $ virtualenv env
+    $ . ./env/bin/activate
     $ pip install -r requirements_dev.txt
+    $ pip install --editable .
 
 4. Create a branch for local development::
 
@@ -77,13 +78,12 @@ Ready to contribute? Here's how to set up `tasks3` for local development.
 
    Now you can make your changes locally.
 
-5. When you're done making changes, check that your changes pass flake8 and the
+5. When you're done making changes, check that your changes match black's style, pass flake8 and the
    tests, including testing other Python versions with tox::
 
+    $ black tasks3 tests
     $ flake8 tasks3 tests
     $ tox
-
-   To get flake8 and tox, just pip install them into your virtualenv.
 
 6. Commit your changes and push your branch to GitHub::
 
@@ -126,4 +126,4 @@ $ bump2version patch # possible: major / minor / patch
 $ git push
 $ git push --tags
 
-A github workflow will trigger if tests pass and it will deploy the package to PyPI.
+Github actions will then deploy to PyPI if tests pass.
